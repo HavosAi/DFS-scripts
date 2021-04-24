@@ -9,7 +9,7 @@ Here is the link to example of such sheet: https://docs.google.com/spreadsheets/
 
 ### Evidence Gap Map
 
-1) Add [res/multiselect.js](https://github.com/DFSDeveloper/DFS-scripts/blob/main/res/multiselect.js) to web page 
+1) Add [res/multiselect.js](https://github.com/DFSDeveloper/DFS-scripts/blob/main/res/multiselect.js) to web page. 
 2) Add resources for HighCharts API to web page: 
 ```
     <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -54,6 +54,9 @@ Example:
     ></div>
 ```
 
+4) Add [evidence-gap-map.js](https://github.com/DFSDeveloper/DFS-scripts/blob/main/evidence-gap-map.js) script to web page. 
+
+
 
 ### World Map 
 
@@ -91,6 +94,9 @@ Example:
     data-table = "1"
     data-settings-table = "2"></div>
 ```
+
+4) Add [world-map-script.js](https://github.com/DFSDeveloper/DFS-scripts/blob/main/world-map-script.js) script to web page. 
+
 
 If you want to add both visualizations on the same web page, add the world map HighCharts resources first, and then the evidence gap map HighCharts resources.
 ```
