@@ -795,73 +795,6 @@
           min: 0,
         },
 
-        // plotOptions: {
-        //   series: {
-        //     cursor: "pointer",
-        //     point: {
-        //       events: {
-        //         click: function () {
-        //           // alert(this.name);
-
-        //           let countryFilterElement = {};
-        //           let countryName = this.name;
-
-        //           document
-        //             .querySelectorAll("." + filterSelectClass)
-        //             .forEach((element) => {
-        //               filtersBlockArray.forEach((filter) => {
-        //                 if (filter.letter == studyCountryLetter) {
-        //                   let countryFilterTitle = filter.title;
-
-        //                   if (
-        //                     element.attributes.name.value == countryFilterTitle
-        //                   ) {
-        //                     countryFilterElement = element;
-        //                   }
-        //                 }
-        //               });
-        //             });
-
-        //           let targetSelectorElement = document.querySelector(
-        //             "#" +
-        //               countryFilterElement.attributes.id.value +
-        //               "_itemList > span > label > input"
-        //           );
-
-        //           targetSelectorElement.click();
-        //           targetSelectorElement.click();
-
-        //           document
-        //             .querySelectorAll(
-        //               "#" +
-        //                 countryFilterElement.attributes.id.value +
-        //                 "_itemList ul li"
-        //             )
-        //             .forEach(function (item) {
-        //               if (
-        //                 countryName ==
-        //                 item
-        //                   .querySelector(".multiselect-checkbox")
-        //                   .getAttribute("data-val")
-        //                   .trim()
-        //               ) {
-        //                 document
-        //                   .querySelector(
-        //                     "#" +
-        //                       countryFilterElement.attributes.id.value +
-        //                       "_input"
-        //                   )
-        //                   .click();
-        //                 item.querySelector(".multiselect-checkbox").click();
-        //                 document.querySelector("#" + updateButtonId).click();
-        //               }
-        //             });
-        //         },
-        //       },
-        //     },
-        //   },
-        // },
-
         series: [
           {
             data: objCountriesAndNumbers,
@@ -1359,7 +1292,7 @@
         pager = $(settings.pagerSelector);
       }
 
-      var numItems = children.size();
+      var numItems = children.length;
       var numPages = Math.ceil(numItems / perPage);
 
       $("#total_reg").html(numItems + " Entries In Total");
