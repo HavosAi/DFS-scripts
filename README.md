@@ -5,6 +5,9 @@
 These scripts provide the ability to visualize the data presented in the Google Sheet.
 Here is the link to example of such sheet: https://docs.google.com/spreadsheets/d/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/
 
+## Requirements
+    To make multiselections in filter blocks of these visualizations work properly you need to add jQuery before all other scripts. 
+    
 ## How to use it
 
 ### Evidence Gap Map
