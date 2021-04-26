@@ -1,5 +1,4 @@
-{
-  /* An example of html tag
+/* An example of html tag
     <div
     id="evidence-gap-map-visualization-1007"
     class="evidence-gap-map-visualization"
@@ -10,7 +9,6 @@
     chart-scale="0.8"
     to-fix-dimensions="-7"
   ></div> */
-}
 
 const evidenceGapMapVisualizationClass = "evidence-gap-map-visualization";
 
@@ -54,7 +52,6 @@ evidenceGapMapElementsArray.forEach((evidenceGapMapElement) => {
     numberOfSettingsTableInGoogleSheet,
     numberOfChartSettingsTableInGoogleSheet
   ).then((data) => {
-
     //Create a component to which the remaining elements will be added
     createInitialComponentForEvidenceMap(
       mainComponentId,

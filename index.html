@@ -1,0 +1,4185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DFS Scripts Example</title>
+
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+      .multiselect-wrapper {
+        width: 180px;
+        display: inline-block;
+        white-space: nowrap;
+        font-size: 12px;
+        font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+      }
+
+      .multiselect-wrapper .multiselect-input {
+        width: 100%;
+        padding-right: 50px;
+      }
+
+      .multiselect-wrapper label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .multiselect-wrapper .multiselect-list {
+        z-index: 1;
+        position: absolute;
+        display: none;
+        background-color: white;
+        border: 1px solid grey;
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+        margin-top: -2px;
+      }
+
+      .multiselect-wrapper .multiselect-list.active {
+        display: block;
+      }
+
+      .multiselect-wrapper .multiselect-list > span {
+        font-weight: bold;
+      }
+
+      .multiselect-wrapper .multiselect-list .multiselect-checkbox {
+        margin-right: 2px;
+      }
+
+      .multiselect-wrapper .multiselect-list > span,
+      .multiselect-wrapper .multiselect-list li {
+        cursor: default;
+      }
+
+      .multiselect-wrapper .multiselect-list {
+        padding: 5px;
+        min-width: 200px;
+      }
+
+      .multiselect-wrapper ul {
+        list-style: none;
+        display: block;
+        position: relative;
+        padding: 0px;
+        margin: 0px;
+        max-height: 200px;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+
+      .multiselect-wrapper ul li {
+        padding-right: 20px;
+        display: block;
+      }
+
+      .multiselect-wrapper ul li.active {
+        background-color: rgb(0, 102, 255);
+        color: white;
+      }
+
+      .multiselect-wrapper ul li:hover {
+        background-color: rgb(0, 102, 255);
+        color: white;
+      }
+
+      .multiselect-input-div {
+        height: 34px;
+      }
+
+      .multiselect-input-div input {
+        border: 1px solid #ababab;
+        background: #fff;
+        margin: 5px 0 6px 0;
+        padding: 5px;
+        vertical-align: middle;
+      }
+
+      .multiselect-count {
+        position: relative;
+        text-align: center;
+        border-radius: 2px;
+        background-color: lightblue;
+        display: inline-block !important;
+        padding: 2px 7px;
+        left: -45px;
+      }
+
+      .multiselect-wrapper.disabled .multiselect-dropdown-arrow {
+        border-top: 5px solid lightgray;
+      }
+
+      .multiselect-wrapper.disabled .multiselect-count {
+        background-color: lightgray;
+      }
+
+      .multiselect-dropdown-arrow {
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid black;
+        position: absolute;
+        line-height: 20px;
+        text-align: center;
+        display: inline-block !important;
+        margin-top: 17px;
+        margin-left: -42px;
+      }
+    </style>
+
+    <style>
+        .pagination-block.pager {
+            display        : flex;
+            flex-wrap      : wrap;
+            margin         : 5vw;
+            justify-content: center;
+            list-style-type: none;
+        }
+
+        .pagination-block.pager li>a {
+            min-height     : 3em;
+            min-width      : 3em;
+            display        : flex;
+            align-items    : center;
+            justify-content: center;
+            border-radius  : 50%;
+        }
+
+        .pagination-block.pager .active a {
+            background: #e67e22;
+            color     : white;
+        }
+
+        .world-map-visualization .pagination-block .page_link,
+        .world-map-visualization .pagination-block .next_link,
+        .world-map-visualization .pagination-block .prev_link {
+            text-decoration: none !important;
+        }
+    </style>
+
+    <script defer>
+    if (!m_helper) {
+        var m_helper = {
+        removeNode: function (id) {
+            var el = document.getElementById(id);
+            if (el) {
+            el.parentNode.removeChild(el);
+            }
+        },
+        insertAfter: function (item, target) {
+            var parent = target.parentNode;
+            if (target.nextElementSibling) {
+            parent.insertBefore(item, target.nextElementSibling);
+            } else {
+            parent.appendChild(item);
+            }
+        },
+        hide: function (element) {
+            element.style.display = "none";
+        },
+        hideAll: function (array) {
+            for (var i = 0; i < array.length; i++) {
+            this.hide(array[i]);
+            }
+        },
+        show: function (element) {
+            element.style.display = "block";
+        },
+        showAll: function (array) {
+            for (var i = 0; i < array.length; i++) {
+            this.show(array[i]);
+            }
+        },
+        parent: function (element, id) {
+            var parent = element.parentElement;
+            while (parent && parent.tagName != "BODY") {
+            if (parent.id == id) {
+                return parent;
+            }
+            parent = parent.parentElement;
+            }
+            return null;
+        },
+        create: function (data) {
+            var result = document.createElement(data.tag);
+            if (data.id) {
+            result.id = data.id;
+            }
+            if (data.class) {
+            result.className = data.class;
+            }
+            if (data.attributes) {
+            for (var prop in data.attributes) {
+                result.setAttribute(prop, data.attributes[prop]);
+            }
+            }
+            if (data.data) {
+            for (var prop in data.data) {
+                result.dataset[prop] = data.data[prop];
+            }
+            }
+            return result;
+        },
+        div: function (data) {
+            if (!data) {
+            data = new Object();
+            }
+            data.tag = "div";
+            return this.create(data);
+        },
+        label: function (data) {
+            if (!data) {
+            data = new Object();
+            }
+            data.tag = "label";
+            return this.create(data);
+        },
+        textField: function (data) {
+            if (!data) {
+            data = new Object();
+            }
+            data.tag = "input";
+            if (!data.attributes) data.attributes = new Object();
+            data.attributes.type = "text";
+            return this.create(data);
+        },
+        checkbox: function (data) {
+            if (!data) {
+            data = new Object();
+            }
+            data.tag = "input";
+            if (!data.attributes) data.attributes = new Object();
+            data.attributes.type = "checkbox";
+            return this.create(data);
+        },
+        each: function (array, handler) {
+            for (var i = 0; i < array.length; i++) {
+            handler(array[i]);
+            }
+        },
+        setActive: function (element) {
+            element.classList.add("active");
+        },
+        setUnactive: function (element) {
+            element.classList.remove("active");
+        },
+        select: function (element) {
+            element.selected = !0;
+            element.setAttribute("selected", "selected");
+        },
+        deselect: function (element) {
+            element.selected = !1;
+            element.removeAttribute("selected");
+        },
+        check: function (element) {
+            element.checked = !0;
+        },
+        uncheck: function (element) {
+            element.checked = !1;
+        },
+        click: function (element) {
+            if (element.fireEvent) {
+            el.fireEvent("onclick");
+            } else {
+            var evObj = document.createEvent("Events");
+            evObj.initEvent("click", !0, !1);
+            element.dispatchEvent(evObj);
+            }
+        },
+        setDisabled: function (element, value) {
+            element.disabled = value;
+        },
+        };
+    }
+    function Multiselect(item, opts) {
+        if (
+        (typeof $ != "undefined" && !$(item).is("select")) ||
+        (typeof $ == "undefined" && item.tagName != "SELECT")
+        ) {
+        throw "Multiselect: passed object must be a select";
+        }
+        if (
+        (typeof $ != "undefined" && !$(item).attr("multiple")) ||
+        (typeof $ == "undefined" && !item.hasAttribute("multiple"))
+        ) {
+        throw "Multiselect: passed object should contain 'multiple' attribute";
+        }
+        this._item = item;
+        this._createUI();
+        this._appendEvents();
+        this._initSelectedFields();
+        this._initIsEnabled();
+    }
+    Multiselect.prototype = {
+        _createUI: function () {
+        m_helper.removeNode(this._getIdentifier());
+        var wrapper = this._createWrapper();
+        m_helper.insertAfter(wrapper, this._item);
+        wrapper.appendChild(this._createInputField());
+        wrapper.appendChild(this._createItemList());
+        m_helper.hide(this._item);
+        },
+        _createWrapper: function () {
+        var result = document.createElement("div");
+        result.className = "multiselect-wrapper";
+        result.id = this._getIdentifier();
+        return result;
+        },
+        _createInputField: function () {
+        var input = m_helper.textField({
+            id: this._getInputFieldIdentifier(),
+            class: "multiselect-input",
+            attributes: { autocomplete: "off" },
+            }),
+            label = m_helper.label({
+            id: this._getInputBadgeIdentifier(),
+            class: "multiselect-count",
+            attributes: { for: this._getInputFieldIdentifier() },
+            }),
+            dropDownArrow = m_helper.label({
+            class: "multiselect-dropdown-arrow",
+            attributes: { for: this._getInputFieldIdentifier() },
+            }),
+            result = m_helper.div({ class: "multiselect-input-div" });
+        label.style.visibility = "hidden";
+        label.innerHTML = 0;
+        result.appendChild(input);
+        result.appendChild(label);
+        result.appendChild(dropDownArrow);
+        return result;
+        },
+        _createItemList: function () {
+        var list = m_helper.create({ tag: "ul" });
+        var self = this;
+        m_helper.each(this._getItems(this._item), function (e) {
+            var insertItem = self._createItem("li", e.id, e.text, e.selected);
+            list.appendChild(insertItem);
+            var checkBox = insertItem.querySelector("input[type=checkbox]");
+            e.multiselectElement = checkBox;
+            checkBox.dataset.multiselectElement = JSON.stringify(e);
+        });
+        var selectAll = this._createItem("span", -1, "Select all");
+        var result = m_helper.div({
+            id: this._getItemListIdentifier(),
+            class: "multiselect-list",
+        });
+        result.appendChild(selectAll);
+        result.appendChild(m_helper.create({ tag: "hr" }));
+        result.appendChild(list);
+        return result;
+        },
+        _createItem: function (wrapper, value, text, selected) {
+        var checkBox = m_helper.checkbox({
+            class: "multiselect-checkbox",
+            data: { val: value },
+            }),
+            textBox = m_helper.create({
+            tag: "span",
+            class: "multiselect-text",
+            }),
+            result = m_helper.create({ tag: wrapper }),
+            label = m_helper.label();
+        textBox.className = "multiselect-text";
+        textBox.innerHTML = text;
+        label.appendChild(checkBox);
+        label.appendChild(textBox);
+        result.appendChild(label);
+        return result;
+        },
+        _initSelectedFields: function () {
+        var itemResult = this._getItems().filter(function (obj) {
+            return obj.selected;
+        });
+        if (itemResult.length != 0) {
+            var self = this;
+            m_helper.each(itemResult, function (e) {
+            self.select(e.id);
+            });
+        }
+        this._hideList(this);
+        },
+        _initIsEnabled: function () {
+        this.setIsEnabled(!this._item.disabled);
+        },
+        destroy() {
+        m_helper.removeNode(this._getIdentifier());
+        m_helper.show(this._item);
+        var index = window.multiselects._items.indexOf(this._item);
+        if (index > -1) {
+            window.multiselects._items.splice(index, 1);
+            window.multiselects.splice(index, 1);
+        }
+        },
+        select: function (val) {
+        this._toggle(val, !0);
+        },
+        deselect: function (val) {
+        this._toggle(val, !1);
+        },
+        setIsEnabled(isEnabled) {
+        if (this._isEnabled === isEnabled) return;
+        var wrapperItem = document.getElementById(this._getIdentifier());
+        if (isEnabled) {
+            wrapperItem.classList.remove("disabled");
+        } else {
+            wrapperItem.classList.add("disabled");
+        }
+        m_helper.setDisabled(this._item, !isEnabled);
+        m_helper.setDisabled(
+            document.getElementById(this._getInputFieldIdentifier()),
+            !isEnabled
+        );
+        this._isEnabled = isEnabled;
+        },
+        _toggle: function (val, setCheck) {
+        var self = this;
+        if (val) {
+            m_helper.each(
+            document
+                .getElementById(this._getIdentifier())
+                .querySelectorAll(".multiselect-checkbox"),
+            function (e) {
+                if (e.dataset.val == val) {
+                if (setCheck && !e.checked) {
+                    m_helper.check(e);
+                    self._onCheckBoxChange(e, self);
+                } else if (!setCheck && e.checked) {
+                    m_helper.uncheck(e);
+                    self._onCheckBoxChange(e, self);
+                }
+                }
+            }
+            );
+            self._updateText(self);
+        }
+        },
+        selectAll: function (val) {
+        var selectAllChkBox = document.querySelector(
+            "#" + this._getIdentifier() + " .multiselect-checkbox"
+        );
+        m_helper.check(selectAllChkBox);
+        this._onCheckBoxChange(selectAllChkBox, this);
+        this._updateText(this);
+        },
+        deselectAll: function () {
+        var selectAllChkBox = document.querySelector(
+            "#" + this._getIdentifier() + " .multiselect-checkbox"
+        );
+        m_helper.uncheck(selectAllChkBox);
+        this._onCheckBoxChange(selectAllChkBox, this);
+        this._updateText(this);
+        },
+        _checkboxClickEvents: {},
+        setCheckBoxClick(id, handler) {
+        if (typeof handler === "function") {
+            this._checkboxClickEvents[id] = handler;
+        } else {
+            console.error(
+            "Checkbox click handler for checkbox value=" +
+                id +
+                " is not a function"
+            );
+        }
+        return this;
+        },
+        _appendEvents: function () {
+        var self = this;
+        document
+            .getElementById(self._getInputFieldIdentifier())
+            .addEventListener("focus", function (event) {
+            self._showList(self);
+            document.getElementById(self._getInputFieldIdentifier()).value =
+                "";
+            m_helper.each(window.multiselects, function (e) {
+                if (
+                document.getElementById(e._getItemListIdentifier())
+                    .offsetParent &&
+                m_helper.parent(event.target, e._getIdentifier())
+                ) {
+                e._hideList(self);
+                }
+            });
+            });
+        document
+            .getElementById(self._getInputFieldIdentifier())
+            .addEventListener("click", function () {
+            self._showList(self);
+            document.getElementById(self._getInputFieldIdentifier()).value =
+                "";
+            });
+        document
+            .getElementById(self._getIdentifier())
+            .addEventListener("click", function (event) {
+            event = event || window.event;
+            var target = event.target || event.srcElement;
+            if (m_helper.parent(target, self._getIdentifier())) {
+                event.stopPropagation();
+            }
+            });
+        document
+            .getElementById(self._getItemListIdentifier())
+            .addEventListener("mouseover", function () {
+            self._showList(self);
+            });
+        m_helper.each(
+            document
+            .getElementById(self._getIdentifier())
+            .querySelectorAll(".multiselect-checkbox"),
+            function (e) {
+            e.addEventListener("change", function (event) {
+                self._onCheckBoxChange(e, self, event);
+            });
+            }
+        );
+        var onInput = function () {
+            var text = this.value.toLowerCase();
+            if (!text || text == "") {
+            m_helper.show(
+                document.querySelector(
+                "#" + self._getItemListIdentifier() + " > span"
+                )
+            );
+            m_helper.show(
+                document.querySelector(
+                "#" + self._getItemListIdentifier() + " > hr"
+                )
+            );
+            m_helper.showAll(
+                document.querySelectorAll(
+                "#" + self._getItemListIdentifier() + " li"
+                )
+            );
+            } else {
+            m_helper.hide(
+                document.querySelector(
+                "#" + self._getItemListIdentifier() + " > span"
+                )
+            );
+            m_helper.hide(
+                document.querySelector(
+                "#" + self._getItemListIdentifier() + " > hr"
+                )
+            );
+            var array = Array.prototype.filter.call(
+                document.querySelectorAll(
+                "#" + self._getItemListIdentifier() + " li span"
+                ),
+                function (obj) {
+                return obj.innerHTML.toLowerCase().indexOf(text) > -1;
+                }
+            );
+            m_helper.hideAll(
+                document.querySelectorAll(
+                "#" + self._getItemListIdentifier() + " li"
+                )
+            );
+            m_helper.each(array, function (e) {
+                m_helper.show(e.parentElement.parentElement);
+            });
+            }
+        };
+        document
+            .getElementById(self._getInputFieldIdentifier())
+            .addEventListener("propertychange", onInput);
+        document
+            .getElementById(self._getInputFieldIdentifier())
+            .addEventListener("input", onInput);
+        },
+        _onCheckBoxChange: function (checkbox, self, event) {
+        if (!checkbox.dataset.multiselectElement) {
+            var checkedState = self._performSelectAll(checkbox, self);
+            if (typeof self._checkboxClickEvents.checkboxAll === "function") {
+            self._checkboxClickEvents.checkboxAll(checkbox, {
+                checked: checkedState,
+            });
+            }
+        } else {
+            var checkedState = self._performSelectItem(checkbox, self);
+            if (
+            typeof self._checkboxClickEvents[checkedState.id] === "function"
+            ) {
+            self._checkboxClickEvents[checkedState.id](
+                checkbox,
+                checkedState
+            );
+            }
+            self._updateSelectAll(self);
+        }
+        self._forceUpdate();
+        },
+        _performSelectItem: function (checkbox, self) {
+        var item = JSON.parse(checkbox.dataset.multiselectElement);
+        if (checkbox.checked) {
+            self._itemCounter++;
+            m_helper.select(this._item.options[item.index]);
+            m_helper.setActive(checkbox.parentElement.parentElement);
+            return { id: item.id, checked: !0 };
+        }
+        self._itemCounter--;
+        m_helper.deselect(this._item.options[item.index]);
+        m_helper.setUnactive(checkbox.parentElement.parentElement);
+        return { id: item.id, checked: !1 };
+        },
+        _performSelectAll: function (checkbox, self) {
+        var items = self._getItems();
+        if (checkbox.checked) {
+            self._itemCounter = items.length;
+            m_helper.each(items, function (e) {
+            m_helper.setActive(
+                e.multiselectElement.parentElement.parentElement
+            );
+            m_helper.select(self._item.options[e.index]);
+            m_helper.check(e.multiselectElement);
+            });
+            return !0;
+        }
+        self._itemCounter = 0;
+        m_helper.each(items, function (e) {
+            e.multiselectElement.parentElement.parentElement.classList.remove(
+            "active"
+            );
+            m_helper.deselect(self._item.options[e.index]);
+            m_helper.uncheck(e.multiselectElement);
+        });
+        return !1;
+        },
+        _updateSelectAll: function (self) {
+        var allChkBox = document
+            .getElementById(self._getItemListIdentifier())
+            .querySelector("input[type=checkbox]");
+        if (self._itemCounter == self._getItems().length) {
+            allChkBox.checked = !0;
+        } else if (allChkBox.checked) {
+            allChkBox.checked = !1;
+        }
+        },
+        _hideList: function (context, event) {
+        m_helper.setUnactive(
+            document.getElementById(context._getItemListIdentifier())
+        );
+        m_helper.show(
+            document
+            .getElementById(context._getItemListIdentifier())
+            .querySelector("span")
+        );
+        m_helper.show(
+            document
+            .getElementById(context._getItemListIdentifier())
+            .querySelector("hr")
+        );
+        m_helper.showAll(
+            document
+            .getElementById(context._getItemListIdentifier())
+            .querySelectorAll("li")
+        );
+        context._updateText(context);
+        if (event) event.stopPropagation();
+        },
+        _updateText: function (context) {
+        var activeItems = document
+            .getElementById(context._getItemListIdentifier())
+            .querySelectorAll("ul .active");
+        if (activeItems.length > 0) {
+            var val = "";
+            for (
+            var i = 0;
+            i < (activeItems.length < 5 ? activeItems.length : 5);
+            i++
+            ) {
+            val += activeItems[i].innerText + ", ";
+            }
+            val = val.substr(0, val.length - 2);
+            if (val.length > 20) {
+            val = val.substr(0, 17) + "...";
+            }
+        }
+        if (
+            activeItems.length ==
+            document
+            .getElementById(context._getItemListIdentifier())
+            .querySelectorAll("ul li").length
+        ) {
+            val = "All selected";
+        }
+        document.getElementById(
+            context._getInputFieldIdentifier()
+        ).value = val ? val : "";
+        },
+        _showList: function (context) {
+        m_helper.setActive(
+            document.getElementById(context._getItemListIdentifier())
+        );
+        },
+        _forceUpdate: function () {
+        var badge = document.getElementById(this._getInputBadgeIdentifier());
+        badge.style.visibility = "hidden";
+        if (this._itemCounter != 0) {
+            badge.innerHTML = this._itemCounter;
+            badge.style.visibility = "visible";
+            var ddArrow = badge.nextElementSibling;
+            if (this._itemCounter < 10) {
+            badge.style.left = "-45px";
+            ddArrow.style.marginLeft = "-42px";
+            } else if (this._itemCounter < 100) {
+            badge.style.left = "-50px";
+            ddArrow.style.marginLeft = "-47px";
+            } else if (this._itemCounter < 1000) {
+            badge.style.left = "-55px";
+            ddArrow.style.marginLeft = "-52px";
+            } else if (this._itemCounter < 10000) {
+            badge.style.left = "-60px";
+            ddArrow.style.marginLeft = "-57px";
+            }
+        }
+        },
+        _items: undefined,
+        _itemCounter: 0,
+        _isEnabled: !0,
+        _getItems: function () {
+        if (this._items == undefined) {
+            var result = [];
+            var opts = this._item.options;
+            for (var i = 0; i < opts.length; i++) {
+            var insertItem = {
+                id: opts[i].value,
+                index: i,
+                text: opts[i].innerHTML,
+                selected: !!opts[i].selected,
+                selectElement: opts[i],
+            };
+            result.push(insertItem);
+            }
+            this._items = result;
+        }
+        return this._items;
+        },
+        _getItemUniqueIdentifier: function () {
+        var id = this._item.getAttribute("id"),
+            name = this._item.getAttribute("name");
+        if (!(id || name)) {
+            throw "Multiselect: object does not contain any identifier (id or name)";
+        }
+        return id ? id : name;
+        },
+        _getIdentifier: function () {
+        return this._getItemUniqueIdentifier() + "_multiSelect";
+        },
+        _getInputFieldIdentifier: function () {
+        return this._getItemUniqueIdentifier() + "_input";
+        },
+        _getItemListIdentifier: function () {
+        return this._getItemUniqueIdentifier() + "_itemList";
+        },
+        _getInputBadgeIdentifier: function () {
+        return this._getItemUniqueIdentifier() + "_inputCount";
+        },
+    };
+    window.multiselects = [];
+    if (typeof $ != "undefined") {
+        $.fn.multiselect = function () {
+        var res = [];
+        if (!window.multiselects._items) {
+            window.multiselects._items = [];
+        }
+        if (this.length != 0) {
+            $(this).each(function (i, e) {
+            var index = window.multiselects._items.indexOf(e);
+            if (index == -1) {
+                var inputItem = new Multiselect(e);
+                window.multiselects.push(inputItem);
+                window.multiselects._items.push(e);
+                res.push(inputItem);
+            } else {
+                res.push(window.multiselects[index]);
+            }
+            });
+        }
+        return res.length == 1 ? res[0] : $(res);
+        };
+        $(document).click(function (event) {
+        hideMultiselects(event);
+        });
+    } else {
+        document.multiselect = function (selector) {
+        var res = [];
+        if (!window.multiselects._items) {
+            window.multiselects._items = [];
+        }
+        m_helper.each(document.querySelectorAll(selector), function (e) {
+            var index = window.multiselects._items.indexOf(e);
+            if (index == -1) {
+            var inputItem = new Multiselect(e);
+            window.multiselects.push(inputItem);
+            window.multiselects._items.push(e);
+            res.push(inputItem);
+            } else {
+            res.push(window.multiselects[index]);
+            }
+        });
+        return res.length == 1 ? res[0] : res;
+        };
+        window.onclick = function (event) {
+        hideMultiselects(event);
+        };
+    }
+    function hideMultiselects(event) {
+        m_helper.each(window.multiselects, function (e) {
+        if (
+            document.getElementById(e._getItemListIdentifier()).offsetParent &&
+            !m_helper.parent(event.target, e._getIdentifier())
+        ) {
+            e._hideList(e, event);
+        }
+        });
+    }
+    </script>
+
+</head>
+  <body>
+    <div>
+        <div
+            id="world-map-visualization-0717"
+            class="world-map-visualization"
+            google-sheet-id="14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8"
+            data-table = "1"
+            data-settings-table = "2"
+        ></div>
+
+        <script defer src="https://code.highcharts.com/maps/highmaps.js"></script>
+        <script defer src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+        <script defer src="https://code.highcharts.com/mapdata/custom/world-eckert3.js"></script>
+        <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+        <script defer>
+            // An exmaple of HTML tag
+            // <div id="world-map-visualization-0717"
+            //     class="world-map-visualization"
+            //     google-sheet-id="14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8"
+            //     data-table = "1"
+            //     data-settings-table = "2"></div>
+
+            const worldMapVisualizationClass = "world-map-visualization";
+
+            //Collect all elements, where evidence gap map is needed
+            let worldMapElementsArray = document.querySelectorAll(
+              "." + worldMapVisualizationClass
+            );
+            const valueSeparator = "|"; //Separator is used to separate values in cells of sheet
+
+            //Applying logic for every world map element
+            worldMapElementsArray.forEach((worldMapElement) => {
+              const mainComponentId = worldMapElement.attributes.id.value;
+              const chartContainerId = mainComponentId + "-world-map-container";
+              const tableId = mainComponentId + "-table";
+              const filterWrapperBlockId = mainComponentId + "-filter-wrapper-block";
+              const updateButtonId = mainComponentId + "-update-visualization-btn";
+              const exportToCSVButtonId = mainComponentId + "-export-to-csv-btn";
+
+              const filterSelectClass = mainComponentId + "-visualization-filter-select";
+
+              const googleSheetId = worldMapElement.attributes["google-sheet-id"].value;
+
+              const numberOfDataTableInGoogleSheet =
+                +worldMapElement.attributes["data-table"].value || 1;
+              const numberOfSettingsTableInGoogleSheet =
+                +worldMapElement.attributes["data-settings-table"].value || 2;
+
+              //Get data from google sheet
+              getGoogleSheet(
+                googleSheetId,
+                numberOfDataTableInGoogleSheet,
+                numberOfSettingsTableInGoogleSheet
+              ).then((data) => {
+                let config = getSettingsObject(data.settings);
+
+                const studyTitleLetter = config.studyTitleLetter;
+                const studyLinkLetter = config.studyLinkLetter;
+                const studyCountryLetter = config.studyCountryLetter;
+                const filtersBlockArray = config.filtersBlockArray;
+                const tableColumnTitlesArray = config.tableColumnTitlesArray;
+
+                //Prepare an array of studies
+                let studiesArray = getStudiesArray(
+                  data.sheet,
+                  studyTitleLetter,
+                  studyLinkLetter,
+                  studyCountryLetter,
+                  filtersBlockArray,
+                  tableColumnTitlesArray
+                );
+
+                //Prepare initial structure for filters data
+                let filtersValuesFromSheetArray = getValuesForFiltersArray(
+                  studiesArray,
+                  filtersBlockArray
+                );
+
+                //Create map
+                createWorldMapComponent(
+                  mainComponentId,
+                  chartContainerId,
+                  updateButtonId,
+                  studiesArray,
+                  [],
+                  studyCountryLetter,
+                  filterSelectClass,
+                  filtersBlockArray
+                );
+
+                //Create table
+                createTableComponent(
+                  mainComponentId,
+                  tableId,
+                  exportToCSVButtonId,
+                  studiesArray,
+                  tableColumnTitlesArray,
+                  studyTitleLetter
+                );
+
+                //Hide table
+                makeTableVisible(false, tableId);
+
+                //Create filters' block
+                createFiltersBlockComponent(
+                  mainComponentId,
+                  filterWrapperBlockId,
+                  updateButtonId,
+                  filterSelectClass,
+                  filtersBlockArray,
+                  filtersValuesFromSheetArray
+                );
+
+                //Set up all updating logic here
+                document
+                  .getElementById(updateButtonId)
+                  .addEventListener("click", async function (event) {
+                    updateVisualization(
+                      mainComponentId,
+                      chartContainerId,
+                      tableId,
+                      updateButtonId,
+                      exportToCSVButtonId,
+                      filterSelectClass,
+                      studiesArray,
+                      tableColumnTitlesArray,
+                      filtersBlockArray,
+                      studyTitleLetter,
+                      studyCountryLetter
+                    );
+                  });
+
+                //Highlight specific filter depend on url
+                highlightFilter();
+              });
+            });
+
+            function getSettingsObject(settings) {
+              const cellsArray = settings.feed.entry;
+              const numberOfColumns = getNumberOfColumns(cellsArray);
+
+              //||Study title column letter||Country column letter||Study link column letter ||Filter titles||Filter column letter||Filter default values||Table column titles||Table column title letter||
+              //||B                        ||C                    ||D                        ||Country      ||C                   || First | Second      ||Study              || B                       ||
+
+              const columnLetterOfStudyTitleColumnLetter = "A";
+              const columnLetterOfCountryColumnLetter = "B";
+              const columnLetterOfStudyLinkColumnLetter = "C";
+              const columnLetterOfFilterTitles = "D";
+              const columnLetterOfFilterColumnLetter = "E";
+              const columnLetterOfFilterDefaultValues = "F";
+              const columnLetterOfTableColumnTitles = "G";
+              const columnLetterOfTableColumnTitleLetter = "H";
+
+              let tempStudyTitleLetter = "";
+              let tempStudyCountryLetter = "";
+              let tempStudyLinkLetter = "";
+              let tempFiltersBlockArray = [];
+              let temptableColumnTitlesArray = [];
+
+              let tempFiltersBlockItem = {
+                letter: "",
+                title: "",
+                defaultValues: [],
+              };
+
+              let tempTableColumnItem = {
+                letter: "",
+                title: "",
+              };
+
+              cellsArray.forEach((element, index, array) => {
+                if (index >= numberOfColumns) {
+                  if (
+                    !tempStudyTitleLetter &&
+                    element.title["$t"].match(/([A-z]+)/g) ==
+                      columnLetterOfStudyTitleColumnLetter
+                  ) {
+                    tempStudyTitleLetter = element.content["$t"].trim();
+                  }
+
+                  if (
+                    !tempStudyCountryLetter &&
+                    element.title["$t"].match(/([A-z]+)/g) ==
+                      columnLetterOfCountryColumnLetter
+                  ) {
+                    tempStudyCountryLetter = element.content["$t"].trim();
+                  }
+
+                  if (
+                    !tempStudyLinkLetter &&
+                    element.title["$t"].match(/([A-z]+)/g) ==
+                      columnLetterOfStudyLinkColumnLetter
+                  ) {
+                    tempStudyLinkLetter = element.content["$t"].trim();
+                  }
+
+                  if (
+                    element.title["$t"].match(/([A-z]+)/g) == columnLetterOfFilterTitles
+                  ) {
+                    tempFiltersBlockItem.title = element.content["$t"].trim();
+                  }
+
+                  if (
+                    tempFiltersBlockItem.title == array[index - 1].content["$t"].trim() &&
+                    element.title["$t"].match(/([A-z]+)/g) ==
+                      columnLetterOfFilterColumnLetter
+                  ) {
+                    tempFiltersBlockItem.letter = element.content["$t"].trim();
+                  }
+
+                  if (
+                    tempFiltersBlockItem.title == array[index - 2].content["$t"].trim() &&
+                    element.title["$t"].match(/([A-z]+)/g) ==
+                      columnLetterOfFilterDefaultValues
+                  ) {
+                    element.content["$t"].split(valueSeparator).forEach((cellValue) => {
+                      tempFiltersBlockItem.defaultValues.push(cellValue.trim());
+                    });
+                  }
+
+                  if (
+                    element.title["$t"].match(/([A-z]+)/g) ==
+                    columnLetterOfTableColumnTitles
+                  ) {
+                    tempTableColumnItem.title = element.content["$t"].trim();
+                  }
+
+                  if (
+                    tempTableColumnItem.title == array[index - 1].content["$t"].trim() &&
+                    element.title["$t"].match(/([A-z]+)/g) ==
+                      columnLetterOfTableColumnTitleLetter
+                  ) {
+                    tempTableColumnItem.letter = element.content["$t"].trim();
+                  }
+
+                  if (
+                    typeof array[index + 1] === "undefined" ||
+                    array[index].title["$t"] > array[index + 1].title["$t"]
+                  ) {
+                    if (tempFiltersBlockItem.title && tempFiltersBlockItem.letter) {
+                      tempFiltersBlockArray.push(tempFiltersBlockItem);
+                    }
+                    if (tempTableColumnItem.title && tempTableColumnItem.letter) {
+                      temptableColumnTitlesArray.push(tempTableColumnItem);
+                    }
+
+                    tempFiltersBlockItem = {
+                      letter: "",
+                      title: "",
+                      defaultValues: [],
+                    };
+
+                    tempTableColumnItem = {
+                      letter: "",
+                      title: "",
+                    };
+                  }
+                }
+              });
+
+              let resultObj = {
+                studyTitleLetter: tempStudyTitleLetter,
+                studyCountryLetter: tempStudyCountryLetter,
+                studyLinkLetter: tempStudyLinkLetter,
+                filtersBlockArray: tempFiltersBlockArray,
+                tableColumnTitlesArray: temptableColumnTitlesArray,
+              };
+
+              return resultObj;
+            }
+
+            function updateVisualization(
+              mainComponentId,
+              chartContainerId,
+              tableId,
+              updateButtonId,
+              exportToCSVButtonId,
+              filterSelectClass,
+              studiesArray,
+              tableColumnTitlesArray,
+              filtersBlockArray,
+              studyTitleLetter,
+              studyCountryLetter
+            ) {
+              let chartContainerElement = document.getElementById(chartContainerId);
+              let tableButtonBlockElement = document.getElementById(
+                mainComponentId + "-table-button-block-wrapper"
+              );
+              let tableContainerElement = document.getElementById(tableId + "-container");
+              let tablePaginationBlock = document.getElementById(
+                tableId + "-pagination-block"
+              );
+
+              tableContainerElement.parentNode.removeChild(tableContainerElement);
+              chartContainerElement.parentNode.removeChild(chartContainerElement);
+              tableButtonBlockElement.parentNode.removeChild(tableButtonBlockElement);
+              tablePaginationBlock.parentNode.removeChild(tablePaginationBlock);
+
+              let filtersValuesFromFilterBlockArray = getValuesFromFilterBlock(
+                filtersBlockArray,
+                filterSelectClass
+              );
+
+              let studiesFilteredArray = getFilteredStudiesArray(
+                studiesArray,
+                filtersValuesFromFilterBlockArray
+              );
+
+              createWorldMapComponent(
+                mainComponentId,
+                chartContainerId,
+                updateButtonId,
+                studiesFilteredArray,
+                filtersValuesFromFilterBlockArray,
+                studyCountryLetter,
+                filterSelectClass,
+                filtersBlockArray
+              );
+
+              createTableComponent(
+                mainComponentId,
+                tableId,
+                exportToCSVButtonId,
+                studiesFilteredArray,
+                tableColumnTitlesArray,
+                studyTitleLetter
+              );
+
+              makeTableVisible(true, tableId);
+
+              filtersValuesFromFilterBlockArray = [];
+            }
+
+            async function getGoogleSheet(
+              spreadsheetID,
+              numberOfDataTableInGoogleSheet,
+              numberOfSettingsTableInGoogleSheet
+            ) {
+              // https://www.youtube.com/watch?v=MDKph2XhqXc
+              try {
+                const response = await fetch(
+                  `https://spreadsheets.google.com/feeds/worksheets/${spreadsheetID}/public/basic?alt=json`
+                );
+                const responseJSON = await response.json();
+                const sheet = await fetch(
+                  responseJSON.feed.entry[numberOfDataTableInGoogleSheet - 1].link[1].href +
+                    "?alt=json"
+                );
+                const sheetJSON = await sheet.json();
+
+                const settings = await fetch(
+                  responseJSON.feed.entry[numberOfSettingsTableInGoogleSheet - 1].link[1]
+                    .href + "?alt=json"
+                );
+                const settingsJSON = await settings.json();
+
+                return { sheet: sheetJSON, settings: settingsJSON };
+              } catch (error) {
+                console.log(error);
+              }
+            }
+
+            function getStudiesArray(
+              data,
+              studyTitleLetter,
+              studyLinkLetter,
+              studyCountryLetter,
+              filtersBlockArray,
+              tableColumnTitlesArray
+            ) {
+              let studiesArray = [];
+              const cellsArray = data.feed.entry;
+              const numberOfColumns = getNumberOfColumns(cellsArray);
+
+              let tempStudyTitle = "";
+              let tempStudyLink = "";
+              let tempStudyCountriesArray = [];
+              let tempFiltersBlockArray = initializeStudiesValuesArray(filtersBlockArray);
+              let temptableColumnTitlesArray = initializeStudiesValuesArray(
+                tableColumnTitlesArray
+              );
+
+              cellsArray.forEach((element, index, array) => {
+                if (index >= numberOfColumns) {
+                  if (element.title["$t"].match(/([A-z]+)/g) == studyTitleLetter) {
+                    tempStudyTitle = element.content["$t"].trim();
+                  }
+
+                  if (element.title["$t"].match(/([A-z]+)/g) == studyCountryLetter) {
+                    element.content["$t"].split(valueSeparator).forEach((cellValue) => {
+                      tempStudyCountriesArray.push(cellValue.trim());
+                    });
+                  }
+
+                  if (element.title["$t"].match(/([A-z]+)/g) == studyLinkLetter) {
+                    tempStudyLink = element.content["$t"].trim();
+                  }
+
+                  filtersBlockArray.forEach((item, index) => {
+                    if (element.title["$t"].match(/([A-z]+)/g) == item.letter) {
+                      element.content["$t"].split(valueSeparator).forEach((cellValue) => {
+                        tempFiltersBlockArray.forEach((filterItem) => {
+                          if (filterItem.title == item.title.trim()) {
+                            filterItem.values.push(cellValue.trim());
+                          }
+                        });
+                      });
+                    }
+                  });
+
+                  tableColumnTitlesArray.forEach((item, index) => {
+                    if (element.title["$t"].match(/([A-z]+)/g) == item.letter) {
+                      element.content["$t"].split(valueSeparator).forEach((cellValue) => {
+                        temptableColumnTitlesArray.forEach((columnItem) => {
+                          if (columnItem.title == item.title.trim()) {
+                            columnItem.values.push(cellValue.trim());
+                          }
+                        });
+                      });
+                    }
+                  });
+
+                  if (
+                    typeof array[index + 1] === "undefined" ||
+                    array[index].title["$t"] > array[index + 1].title["$t"]
+                  ) {
+                    // If study has title and country - add it to array
+                    if (tempStudyTitle.length > 0 && tempStudyCountriesArray.length > 0) {
+                      let tempObj = {
+                        studyTitle: tempStudyTitle,
+                        studyLink: tempStudyLink,
+                        studyCountriesArray: tempStudyCountriesArray,
+                        tableColumns: temptableColumnTitlesArray,
+                        filterBlock: tempFiltersBlockArray,
+                      };
+                      studiesArray.push(tempObj);
+
+                      tempStudyTitle = "";
+                      tempStudyLink = "";
+                      tempStudyCountriesArray = [];
+                      temptableColumnTitlesArray = initializeStudiesValuesArray(
+                        tableColumnTitlesArray
+                      );
+                      tempFiltersBlockArray = initializeStudiesValuesArray(
+                        filtersBlockArray
+                      );
+                    } else {
+                      tempStudyTitle = "";
+                      tempStudyLink = "";
+                      tempStudyCountriesArray = [];
+                      temptableColumnTitlesArray = initializeStudiesValuesArray(
+                        tableColumnTitlesArray
+                      );
+                      tempFiltersBlockArray = initializeStudiesValuesArray(
+                        filtersBlockArray
+                      );
+                    }
+                  }
+                }
+              });
+
+              return studiesArray;
+            }
+
+            function getFilteredStudiesArray(
+              studiesArray,
+              filtersValuesFromFilterBlockArray
+            ) {
+              let resultArray = studiesArray.filter((study) => {
+                let isAllFiltersMatchesFlagArray = [];
+
+                study.filterBlock.forEach((studyFilter) => {
+                  let isAtLeastOneFilterValueMatch = false;
+                  filtersValuesFromFilterBlockArray.forEach((fblockFilter) => {
+                    if (studyFilter.title == fblockFilter.title) {
+                      if (
+                        fblockFilter.values.length == 0 &&
+                        studyFilter.values.length == 0
+                      ) {
+                        //if no filter value is selected and no study filter value exists
+                        isAtLeastOneFilterValueMatch = true;
+                      } else if (
+                        fblockFilter.values.length == 0 &&
+                        studyFilter.values.length > 0
+                      ) {
+                        //if no filter value is selected and study filter values exist
+                        isAtLeastOneFilterValueMatch = true;
+                      } else if (
+                        fblockFilter.values.length > 0 &&
+                        studyFilter.values.length == 0
+                      ) {
+                        //if filter value is selected but no study filter value exists
+                        isAtLeastOneFilterValueMatch = false;
+                      } else {
+                        studyFilter.values.forEach((studyFilterValue) => {
+                          fblockFilter.values.forEach((fblockFilterValue) => {
+                            if (studyFilterValue == fblockFilterValue) {
+                              isAtLeastOneFilterValueMatch = true;
+                            }
+                          });
+                        });
+                      }
+                    }
+                  });
+
+                  isAllFiltersMatchesFlagArray.push(isAtLeastOneFilterValueMatch);
+                });
+
+                if (isAllFiltersMatchesFlagArray.indexOf(false) === -1) {
+                  return true;
+                }
+              });
+
+              return resultArray;
+            }
+
+            function getValuesForFiltersArray(studiesArray, filtersBlockArray) {
+              let filtersValuesFromSheetArray = initializeStudiesValuesArray(
+                filtersBlockArray
+              );
+
+              // Create array with all filters values
+              studiesArray.forEach((study, index, array) => {
+                study.filterBlock.forEach((studyFilterItem, indexOfblockFilter) => {
+                  studyFilterItem.values.forEach((studyFilterItemValue) => {
+                    filtersValuesFromSheetArray.forEach((filterArrayTemp) => {
+                      if (filterArrayTemp.title == studyFilterItem.title) {
+                        if (filterArrayTemp.values.indexOf(studyFilterItemValue) === -1) {
+                          filterArrayTemp.values.push(studyFilterItemValue.trim());
+                        }
+                      }
+                    });
+                  });
+                });
+              });
+
+              return filtersValuesFromSheetArray;
+            }
+
+            function getValuesFromFilterBlock(filtersBlockArray, filterSelectClass) {
+              let resultArray = initializeStudiesValuesArray(filtersBlockArray);
+              let filterList = document.querySelectorAll(`.${filterSelectClass}`);
+
+              filterList.forEach((filterNode) => {
+                document
+                  .querySelectorAll(`#${filterNode.id}_itemList ul li`)
+                  .forEach(function (item) {
+                    resultArray.forEach((filtersValuesItem) => {
+                      if (item.classList.contains("active")) {
+                        if (filterNode.name == filtersValuesItem.title) {
+                          filtersValuesItem.values.push(
+                            item
+                              .querySelector(".multiselect-checkbox")
+                              .getAttribute("data-val")
+                          );
+                        }
+                      }
+                    });
+                  });
+              });
+
+              return resultArray;
+            }
+
+            function createTableComponent(
+              mainComponentId,
+              tableId,
+              exportToCSVButtonId,
+              studiesArray,
+              tableColumnTitlesArray,
+              studyTitleLetter
+            ) {
+              // Add export button for table
+              let tableButtonWrapper = document.createElement("div");
+              tableButtonWrapper.classList.add("table-button-block-wrapper");
+              tableButtonWrapper.id = mainComponentId + "-table-button-block-wrapper";
+              tableButtonWrapper.setAttribute(
+                "style",
+                "display: flex; align-items: center; justify-content: flex-end; "
+              );
+
+              document.getElementById(mainComponentId).append(tableButtonWrapper);
+
+              let tableWrapperBlockButtonElement = document.createElement("div");
+              tableWrapperBlockButtonElement.classList.add("wp-block-button");
+              tableWrapperBlockButtonElement.classList.add("export-table-btn");
+              tableButtonWrapper.append(tableWrapperBlockButtonElement);
+
+              let tableWrapperBlockButtonLinkElement = document.createElement("a");
+              tableWrapperBlockButtonLinkElement.id = exportToCSVButtonId;
+              tableWrapperBlockButtonLinkElement.classList.add("wp-block-button__link");
+              tableWrapperBlockButtonLinkElement.classList.add("has-background");
+              tableWrapperBlockButtonLinkElement.classList.add(
+                "has-luminous-vivid-orange-background-color"
+              );
+              tableWrapperBlockButtonLinkElement.innerHTML = "Export to CSV";
+              tableWrapperBlockButtonElement.append(tableWrapperBlockButtonLinkElement);
+
+              const tableContentId = tableId + "-content";
+              const tablePaginationBlockId = tableId + "-pagination-block";
+
+              let tableWrapperElement = document.createElement("div");
+              tableWrapperElement.classList.add("world-map-table-block");
+              tableWrapperElement.id = tableId + "-container";
+              document.getElementById(mainComponentId).append(tableWrapperElement);
+
+              let tableElement = document.createElement("table");
+              tableElement.classList.add("world-map-table");
+              tableElement.classList.add("table-to-paginate");
+              tableElement.id = tableId;
+              tableWrapperElement.append(tableElement);
+
+              let tablePaginationBlockElement = document.createElement("ul");
+              tablePaginationBlockElement.classList.add("pagination-block");
+              tablePaginationBlockElement.classList.add("pager");
+              tablePaginationBlockElement.setAttribute(
+                "style",
+                "display: flex; flex-wrap: wrap;"
+              );
+              tablePaginationBlockElement.id = tablePaginationBlockId;
+              document.getElementById(mainComponentId).append(tablePaginationBlockElement);
+
+              let tHeadTableElement = document.createElement("thead");
+              tHeadTableElement.classList.add("world-map-table-header");
+              tableElement.append(tHeadTableElement);
+
+              let tBodyTableElement = document.createElement("tbody");
+              tBodyTableElement.classList.add("world-map-table-content");
+              tBodyTableElement.setAttribute(
+                "style",
+                "text-align: center; font-weight: normal !important"
+              );
+              tBodyTableElement.id = tableContentId;
+              tableElement.append(tBodyTableElement);
+
+              //Fill in table header
+              let tableRowElement = document.createElement("tr");
+              tHeadTableElement.append(tableRowElement);
+              tableColumnTitlesArray.forEach((tableColumnItem) => {
+                let th = document.createElement("th");
+                th.innerHTML = tableColumnItem.title;
+                tableRowElement.append(th);
+              });
+
+              studiesArray.forEach((study) => {
+                let tableRowElement = document.createElement("tr");
+                tBodyTableElement.append(tableRowElement);
+
+                study.tableColumns.forEach((studyTableColumn) => {
+                  if (studyTableColumn.letter == studyTitleLetter) {
+                    let th = document.createElement("th");
+                    th.innerHTML = getTitleAsHTML(
+                      studyTableColumn.values[0],
+                      study.studyLink
+                    );
+                    tableRowElement.append(th);
+                  }
+
+                  tableColumnTitlesArray.forEach((tableColumnTitleItem) => {
+                    if (
+                      studyTableColumn.letter == tableColumnTitleItem.letter &&
+                      studyTableColumn.letter != studyTitleLetter
+                    ) {
+                      let th = document.createElement("th");
+                      th.innerHTML = studyTableColumn.values.join(", ");
+                      tableRowElement.append(th);
+                    }
+                  });
+                });
+              });
+
+              addPaginationToTable(tableContentId, tablePaginationBlockId);
+
+              //to clear eventlistners
+              var old_element = document.getElementById(exportToCSVButtonId);
+              var new_element = old_element.cloneNode(true);
+              old_element.parentNode.replaceChild(new_element, old_element);
+
+              document
+                .getElementById(exportToCSVButtonId)
+                .addEventListener("click", function () {
+                  downloadCSV(tableId, "world-map-data.csv");
+                });
+            }
+
+            function getTitleAsHTML(title, link) {
+              if (typeof link === "string" && link.length > 0) {
+                return `<a href="${link}" target="_blank"> ${title} </a>`;
+              } else {
+                return title;
+              }
+            }
+
+            function createWorldMapComponent(
+              mainComponentId,
+              chartContainerId,
+              updateButtonId,
+              studiesArray,
+              filtersValuesFromFilterBlockArray,
+              studyCountryLetter,
+              filterSelectClass,
+              filtersBlockArray
+            ) {
+              //If "world-map-block" exists - remove it
+              var mapElement = document.getElementById(
+                mainComponentId + "-world-map-block"
+              );
+              if (typeof mapElement != "undefined" && mapElement != null) {
+                mapElement.parentNode.removeChild(mapElement);
+              }
+
+              // Create world-map-block element
+              let worldMapChartWrapperElement = document.createElement("div");
+              worldMapChartWrapperElement.classList.add("world-map-block");
+              worldMapChartWrapperElement.id = mainComponentId + "-world-map-block";
+
+              let worldMapChartElement = document.createElement("div");
+              worldMapChartElement.id = chartContainerId;
+              worldMapChartWrapperElement.append(worldMapChartElement);
+
+              document.getElementById(mainComponentId).append(worldMapChartWrapperElement);
+
+              let isAtLeastOneCountrySelectedInFilter = false;
+
+              // Check if filter column letter from sheet is equal to country column letter
+              if (filtersValuesFromFilterBlockArray) {
+                filtersValuesFromFilterBlockArray.forEach((filteredItem) => {
+                  if (
+                    filteredItem.letter == studyCountryLetter &&
+                    filteredItem.values.length > 0
+                  ) {
+                    isAtLeastOneCountrySelectedInFilter = true;
+                  }
+                });
+              }
+
+              // create array of countries
+              let tempCountriesForMapArray = [];
+              studiesArray.forEach((study) => {
+                study.studyCountriesArray.forEach((countryTitle) => {
+                  if (isAtLeastOneCountrySelectedInFilter) {
+                    filtersValuesFromFilterBlockArray.forEach((filteredItem) => {
+                      if (filteredItem.letter == studyCountryLetter) {
+                        filteredItem.values.forEach((filteredValue) => {
+                          if (countryTitle == filteredValue) {
+                            tempCountriesForMapArray.push(countryTitle);
+                          }
+                        });
+                      }
+                    });
+                  } else {
+                    tempCountriesForMapArray.push(countryTitle);
+                  }
+                });
+              });
+
+              // count countries
+              tempArray = tempCountriesForMapArray.reduce(function (accumulator, el) {
+                accumulator[el] = (accumulator[el] || 0) + 1;
+                return accumulator;
+              }, {});
+
+              //get countries short codes
+              let objCountriesAndNumbers = [];
+              for (prop in tempArray) {
+                countryName = getCountryName(prop);
+                if (countryName) {
+                  objCountriesAndNumbers.push([countryName, tempArray[prop]]);
+                }
+              }
+
+              var worldMapHighchart = Highcharts.mapChart(chartContainerId, {
+                chart: {
+                  map: "custom/world-eckert3",
+                },
+                title: {
+                  text: "",
+                },
+                mapNavigation: {
+                  enabled: true,
+                  enableMouseWheelZoom: false,
+                  buttonOptions: {
+                    verticalAlign: "bottom",
+                  },
+                },
+                colorAxis: {
+                  min: 0,
+                },
+
+                series: [
+                  {
+                    data: objCountriesAndNumbers,
+                    name: "Number of studies",
+                    states: {
+                      hover: {
+                        color: "#BADA55",
+                      },
+                    },
+                    dataLabels: {
+                      enabled: true,
+                      format: "{point.name}",
+                    },
+                  },
+                ],
+              });
+            }
+
+            function createFiltersBlockComponent(
+              mainComponentId,
+              filterWrapperBlockId,
+              updateButtonId,
+              filterSelectClass,
+              filtersBlockArray,
+              filtersValuesFromSheetArray
+            ) {
+              let updateButtonWrapper = document.createElement("div");
+              updateButtonWrapper.classList.add("filter-button-block-wrapper");
+              updateButtonWrapper.setAttribute(
+                "style",
+                "display: flex; align-items: center; justify-content: center; "
+              );
+
+              document.getElementById(mainComponentId).prepend(updateButtonWrapper);
+
+              // Add update button for filters
+              let filterWrapperBlockButtonElement = document.createElement("div");
+              filterWrapperBlockButtonElement.classList.add("wp-block-button");
+              filterWrapperBlockButtonElement.classList.add("custom-filter-btn");
+              updateButtonWrapper.append(filterWrapperBlockButtonElement);
+
+              // Id of this element is used in another place too
+              let filterWrapperBlockButtonLinkElement = document.createElement("a");
+              filterWrapperBlockButtonLinkElement.id = updateButtonId;
+              filterWrapperBlockButtonLinkElement.classList.add("wp-block-button__link");
+              filterWrapperBlockButtonLinkElement.classList.add("has-background");
+              filterWrapperBlockButtonLinkElement.classList.add(
+                "has-luminous-vivid-orange-background-color"
+              );
+              filterWrapperBlockButtonLinkElement.innerHTML = "Explore";
+              filterWrapperBlockButtonElement.append(filterWrapperBlockButtonLinkElement);
+
+              // Add filters' block element
+              let filterWrapperBlockElement = document.createElement("div");
+              filterWrapperBlockElement.classList.add("filter-wrapper-block");
+              filterWrapperBlockElement.id = filterWrapperBlockId;
+              document.getElementById(mainComponentId).prepend(filterWrapperBlockElement);
+
+              filtersBlockArray.forEach((filtersBlockArrayItem, indexOfblockFilter) => {
+                // Add filters' wrapper element
+                let filterWrapperElement = document.createElement("div");
+                filterWrapperElement.classList.add("filter-wrapper");
+                filterWrapperElement.id =
+                  mainComponentId +
+                  "-filter-wrapper-" +
+                  filtersBlockArrayItem.title.replace(/\W/g, "_");
+                filterWrapperElement.setAttribute(
+                  "style",
+                  "display: flex; align-items: center; padding: 1em"
+                );
+                filterWrapperBlockElement.append(filterWrapperElement);
+
+                // Add title of filter
+                let filterTitleElement = document.createElement("div");
+                filterTitleElement.innerHTML = filtersBlockArrayItem.title;
+                filterTitleElement.setAttribute("style", "padding: 0 1em");
+                filterWrapperElement.append(filterTitleElement);
+
+                // Add select to filter
+                let filterSelectElement = document.createElement("select");
+                filterSelectElement.id =
+                  mainComponentId +
+                  "-visualization-filter-" +
+                  filtersBlockArrayItem.title.replace(/\W/g, "_");
+                filterSelectElement.name = filtersBlockArrayItem.title;
+                filterSelectElement.classList.add(filterSelectClass);
+                filterSelectElement.setAttribute("style", "margin: 1rem 2rem 1rem 0");
+                filterSelectElement.setAttribute("multiple", "");
+                filterWrapperElement.append(filterSelectElement);
+
+                // Add default options to select
+
+                filtersBlockArrayItem.defaultValues.forEach((defaultFilterValue) => {
+                  let filterSelectOptionElement = document.createElement("option");
+                  filterSelectOptionElement.innerHTML = defaultFilterValue;
+                  filterSelectOptionElement.setAttribute("value", defaultFilterValue);
+                  filterSelectElement.append(filterSelectOptionElement);
+                });
+
+                // Add unique filter's values from google sheet
+                filtersValuesFromSheetArray.forEach((filtersValuesFromSheetArrayItem) => {
+                  if (
+                    filtersBlockArrayItem.title == filtersValuesFromSheetArrayItem.title
+                  ) {
+                    filtersValuesFromSheetArrayItem.values.forEach((filterValue) => {
+                      let isValueAlreadyAdded = false;
+                      Object.values(filterSelectElement.options).forEach(
+                        (existedOptionValue) => {
+                          if (existedOptionValue.innerHTML == filterValue.trim()) {
+                            isValueAlreadyAdded = true;
+                          }
+                        }
+                      );
+
+                      if (!isValueAlreadyAdded && filterValue) {
+                        let filterSelectOptionElement = document.createElement("option");
+                        filterSelectOptionElement.innerHTML = filterValue;
+                        filterSelectOptionElement.setAttribute("value", filterValue);
+                        filterSelectElement.append(filterSelectOptionElement);
+                      }
+                    });
+                  }
+                });
+              });
+
+              // Add multiselection to filters
+              let filterList = document.querySelectorAll(`.${filterSelectClass}`);
+              filterList.forEach((filterNode) => {
+                document.multiselect(`#${filterNode.id}`);
+              });
+            }
+
+            function initializeStudiesValuesArray(filtersBlockArray) {
+              let tempFiltersBlockArray = [];
+              filtersBlockArray.forEach((item, index) => {
+                let tempObj = {
+                  title: item.title.trim(),
+                  letter: item.letter,
+                  values: [],
+                };
+                tempFiltersBlockArray.push(tempObj);
+              });
+              return tempFiltersBlockArray;
+            }
+
+            function addPaginationToTable(tableElementId, paginationBlockElementId) {
+              $.fn.generatePagination = generatePagination;
+
+              $("#" + tableElementId).generatePagination({
+                pagerSelector: "#" + paginationBlockElementId,
+                activeColor: "orange",
+                prevText: "Prev",
+                nextText: "Next",
+                showPrevNext: true,
+                hidePageNumbers: false,
+                perPage: 8,
+              });
+            }
+
+            function getCountryName(countryName) {
+              let isoCountries = {
+                AF: "Afghanistan",
+                AX: "Aland Islands",
+                AL: "Albania",
+                DZ: "Algeria",
+                AS: "American Samoa",
+                AD: "Andorra",
+                AO: "Angola",
+                AI: "Anguilla",
+                AQ: "Antarctica",
+                AG: "Antigua And Barbuda",
+                AR: "Argentina",
+                AM: "Armenia",
+                AW: "Aruba",
+                AU: "Australia",
+                AT: "Austria",
+                AZ: "Azerbaijan",
+                BS: "Bahamas",
+                BH: "Bahrain",
+                BD: "Bangladesh",
+                BB: "Barbados",
+                BY: "Belarus",
+                BE: "Belgium",
+                BZ: "Belize",
+                BJ: "Benin",
+                BM: "Bermuda",
+                BT: "Bhutan",
+                BO: "Bolivia",
+                BA: "Bosnia And Herzegovina",
+                BW: "Botswana",
+                BV: "Bouvet Island",
+                BR: "Brazil",
+                IO: "British Indian Ocean Territory",
+                BN: "Brunei Darussalam",
+                BG: "Bulgaria",
+                BF: "Burkina Faso",
+                BI: "Burundi",
+                KH: "Cambodia",
+                CM: "Cameroon",
+                CA: "Canada",
+                CV: "Cape Verde",
+                KY: "Cayman Islands",
+                CF: "Central African Republic",
+                TD: "Chad",
+                CL: "Chile",
+                CN: "China",
+                CX: "Christmas Island",
+                CC: "Cocos (Keeling) Islands",
+                CO: "Colombia",
+                KM: "Comoros",
+                CG: "Congo",
+                CD: "Congo, Democratic Republic",
+                CK: "Cook Islands",
+                CR: "Costa Rica",
+                CI: "Cote D'Ivoire",
+                HR: "Croatia",
+                CU: "Cuba",
+                CY: "Cyprus",
+                CZ: "Czech Republic",
+                DK: "Denmark",
+                DJ: "Djibouti",
+                DM: "Dominica",
+                DO: "Dominican Republic",
+                EC: "Ecuador",
+                EG: "Egypt",
+                SV: "El Salvador",
+                GQ: "Equatorial Guinea",
+                ER: "Eritrea",
+                EE: "Estonia",
+                ET: "Ethiopia",
+                FK: "Falkland Islands (Malvinas)",
+                FO: "Faroe Islands",
+                FJ: "Fiji",
+                FI: "Finland",
+                FR: "France",
+                GF: "French Guiana",
+                PF: "French Polynesia",
+                TF: "French Southern Territories",
+                GA: "Gabon",
+                GM: "Gambia",
+                GE: "Georgia",
+                DE: "Germany",
+                GH: "Ghana",
+                GI: "Gibraltar",
+                GR: "Greece",
+                GL: "Greenland",
+                GD: "Grenada",
+                GP: "Guadeloupe",
+                GU: "Guam",
+                GT: "Guatemala",
+                GG: "Guernsey",
+                GN: "Guinea",
+                GW: "Guinea-Bissau",
+                GY: "Guyana",
+                HT: "Haiti",
+                HM: "Heard Island & Mcdonald Islands",
+                VA: "Holy See (Vatican City State)",
+                HN: "Honduras",
+                HK: "Hong Kong",
+                HU: "Hungary",
+                IS: "Iceland",
+                IN: "India",
+                ID: "Indonesia",
+                IR: "Iran, Islamic Republic Of",
+                IQ: "Iraq",
+                IE: "Ireland",
+                IM: "Isle Of Man",
+                IL: "Israel",
+                IT: "Italy",
+                JM: "Jamaica",
+                JP: "Japan",
+                JE: "Jersey",
+                JO: "Jordan",
+                KZ: "Kazakhstan",
+                KE: "Kenya",
+                KI: "Kiribati",
+                KR: "Korea",
+                KW: "Kuwait",
+                KG: "Kyrgyzstan",
+                LA: "Lao People's Democratic Republic",
+                LV: "Latvia",
+                LB: "Lebanon",
+                LS: "Lesotho",
+                LR: "Liberia",
+                LY: "Libyan Arab Jamahiriya",
+                LI: "Liechtenstein",
+                LT: "Lithuania",
+                LU: "Luxembourg",
+                MO: "Macao",
+                MK: "Macedonia",
+                MG: "Madagascar",
+                MW: "Malawi",
+                MY: "Malaysia",
+                MV: "Maldives",
+                ML: "Mali",
+                MT: "Malta",
+                MH: "Marshall Islands",
+                MQ: "Martinique",
+                MR: "Mauritania",
+                MU: "Mauritius",
+                YT: "Mayotte",
+                MX: "Mexico",
+                FM: "Micronesia, Federated States Of",
+                MD: "Moldova",
+                MC: "Monaco",
+                MN: "Mongolia",
+                ME: "Montenegro",
+                MS: "Montserrat",
+                MA: "Morocco",
+                MZ: "Mozambique",
+                MM: "Myanmar",
+                NA: "Namibia",
+                NR: "Nauru",
+                NP: "Nepal",
+                NL: "Netherlands",
+                AN: "Netherlands Antilles",
+                NC: "New Caledonia",
+                NZ: "New Zealand",
+                NI: "Nicaragua",
+                NE: "Niger",
+                NG: "Nigeria",
+                NU: "Niue",
+                NF: "Norfolk Island",
+                MP: "Northern Mariana Islands",
+                NO: "Norway",
+                OM: "Oman",
+                PK: "Pakistan",
+                PW: "Palau",
+                PS: "Palestinian Territory, Occupied",
+                PA: "Panama",
+                PG: "Papua New Guinea",
+                PY: "Paraguay",
+                PE: "Peru",
+                PH: "Philippines",
+                PN: "Pitcairn",
+                PL: "Poland",
+                PT: "Portugal",
+                PR: "Puerto Rico",
+                QA: "Qatar",
+                RE: "Reunion",
+                RO: "Romania",
+                RU: "Russian Federation",
+                RW: "Rwanda",
+                BL: "Saint Barthelemy",
+                SH: "Saint Helena",
+                KN: "Saint Kitts And Nevis",
+                LC: "Saint Lucia",
+                MF: "Saint Martin",
+                PM: "Saint Pierre And Miquelon",
+                VC: "Saint Vincent And Grenadines",
+                WS: "Samoa",
+                SM: "San Marino",
+                ST: "Sao Tome And Principe",
+                SA: "Saudi Arabia",
+                SN: "Senegal",
+                RS: "Serbia",
+                SC: "Seychelles",
+                SL: "Sierra Leone",
+                SG: "Singapore",
+                SK: "Slovakia",
+                SI: "Slovenia",
+                SB: "Solomon Islands",
+                SO: "Somalia",
+                ZA: "South Africa",
+                GS: "South Georgia And Sandwich Isl.",
+                ES: "Spain",
+                LK: "Sri Lanka",
+                SD: "Sudan",
+                SR: "Suriname",
+                SJ: "Svalbard And Jan Mayen",
+                SZ: "Swaziland",
+                SE: "Sweden",
+                CH: "Switzerland",
+                SY: "Syrian Arab Republic",
+                TW: "Taiwan",
+                TJ: "Tajikistan",
+                TZ: "Tanzania",
+                TH: "Thailand",
+                TL: "Timor-Leste",
+                TG: "Togo",
+                TK: "Tokelau",
+                TO: "Tonga",
+                TT: "Trinidad And Tobago",
+                TN: "Tunisia",
+                TR: "Turkey",
+                TM: "Turkmenistan",
+                TC: "Turks And Caicos Islands",
+                TV: "Tuvalu",
+                UG: "Uganda",
+                UA: "Ukraine",
+                AE: "United Arab Emirates",
+                GB: "United Kingdom",
+                US: "United States",
+                UM: "United States Outlying Islands",
+                UY: "Uruguay",
+                UZ: "Uzbekistan",
+                VU: "Vanuatu",
+                VE: "Venezuela",
+                VN: "Viet Nam",
+                VG: "Virgin Islands, British",
+                VI: "Virgin Islands, U.S.",
+                WF: "Wallis And Futuna",
+                EH: "Western Sahara",
+                YE: "Yemen",
+                ZM: "Zambia",
+                ZW: "Zimbabwe",
+              };
+
+              if (countryName == "Côte d'Ivoire") countryName = "Cote D'Ivoire";
+
+              for (let countryCode in isoCountries) {
+                if (isoCountries[countryCode] == countryName) {
+                  return countryCode.toLocaleLowerCase();
+                }
+              }
+            }
+
+            function getNumberOfColumns(array) {
+              let i = 0;
+              let numberOfColumns = 0;
+              for (let cell of array) {
+                if (array[i + 1] && array[i].title["$t"] > array[i + 1].title["$t"]) {
+                  numberOfColumns++;
+                  break;
+                } else {
+                  numberOfColumns++;
+                  i++;
+                }
+              }
+
+              return numberOfColumns;
+            }
+
+            function makeTableVisible(bool, tableId) {
+              const table = document.getElementById(tableId + "-container");
+              const tablePaginationBlock = document.getElementById(
+                tableId + "-pagination-block"
+              );
+              if (bool) {
+                table.style.display = "block";
+                tablePaginationBlock.style.display = "flex";
+              } else {
+                table.style.display = "none";
+                tablePaginationBlock.style.display = "none";
+              }
+            }
+
+            function highlightFilter() {
+              let url_str = window.location.href;
+              let url = new URL(url_str);
+              let search_params = url.searchParams;
+
+              let highlightId = search_params.get("highlightId");
+
+              if (highlightId) {
+                document.getElementById(highlightId).style.background = "#ff690036";
+              }
+            }
+
+            function generatePagination(opts) {
+              //https://xdsoft.net/jquery-plugins/pageme/
+
+              var $this = this,
+                defaults = {
+                  activeColor: "blue",
+                  perPage: 10,
+                  showPrevNext: false,
+                  nextText: "",
+                  prevText: "",
+                  hidePageNumbers: false,
+                },
+                settings = $.extend(defaults, opts);
+
+              var listElement = $this;
+              var perPage = settings.perPage;
+              var children = listElement.children();
+              var pager = $(".pager");
+
+              if (typeof settings.childSelector != "undefined") {
+                children = listElement.find(settings.childSelector);
+              }
+
+              if (typeof settings.pagerSelector != "undefined") {
+                pager = $(settings.pagerSelector);
+              }
+
+              var numItems = children.length;
+              var numPages = Math.ceil(numItems / perPage);
+
+              $("#total_reg").html(numItems + " Entries In Total");
+
+              pager.data("curr", 0);
+
+              if (settings.showPrevNext) {
+                $(
+                  '<li><a href="#" class="prev_link" title="' +
+                    settings.prevText +
+                    '"><i class="material-icons">chevron_left</i></a></li>'
+                ).appendTo(pager);
+              }
+
+              var curr = 0;
+              while (numPages > curr && settings.hidePageNumbers == false) {
+                $(
+                  '<li class="waves-effect"><a href="#" class="page_link">' +
+                    (curr + 1) +
+                    "</a></li>"
+                ).appendTo(pager);
+                curr++;
+              }
+
+              if (settings.showPrevNext) {
+                $(
+                  '<li><a href="#" class="next_link"  title="' +
+                    settings.nextText +
+                    '"><i class="material-icons">chevron_right</i></a></li>'
+                ).appendTo(pager);
+              }
+
+              pager.find(".page_link:first").addClass("active");
+              pager.find(".prev_link").hide();
+              if (numPages <= 1) {
+                pager.find(".next_link").hide();
+              }
+              pager
+                .children()
+                .eq(1)
+                .addClass("active " + settings.activeColor);
+
+              children.hide();
+              children.slice(0, perPage).show();
+
+              pager.find("li .page_link").click(function () {
+                var clickedPage = $(this).html().valueOf() - 1;
+                goTo(clickedPage, perPage);
+                return false;
+              });
+              pager.find("li .prev_link").click(function () {
+                previous();
+                return false;
+              });
+              pager.find("li .next_link").click(function () {
+                next();
+                return false;
+              });
+
+              function previous() {
+                var goToPage = parseInt(pager.data("curr")) - 1;
+                goTo(goToPage);
+              }
+
+              function next() {
+                goToPage = parseInt(pager.data("curr")) + 1;
+                goTo(goToPage);
+              }
+
+              function goTo(page) {
+                var startAt = page * perPage,
+                  endOn = startAt + perPage;
+
+                children.css("display", "none").slice(startAt, endOn).show();
+
+                if (page >= 1) {
+                  pager.find(".prev_link").show();
+                } else {
+                  pager.find(".prev_link").hide();
+                }
+
+                if (page < numPages - 1) {
+                  pager.find(".next_link").show();
+                } else {
+                  pager.find(".next_link").hide();
+                }
+
+                pager.data("curr", page);
+                pager.children().removeClass("active " + settings.activeColor);
+                pager
+                  .children()
+                  .eq(page + 1)
+                  .addClass("active " + settings.activeColor);
+              }
+            }
+
+            function downloadCSV(tableId, filename) {
+              let csvRows = [];
+              let rows = document.querySelectorAll("#" + tableId + " tr");
+
+              for (let i = 0; i < rows.length; i++) {
+                let row = [],
+                  cols = rows[i].querySelectorAll("td, th");
+
+                for (let j = 0; j < cols.length; j++) {
+                  row.push(cols[j].innerText.replace(/"/g, "`"));
+                }
+
+                csvRows.push(row);
+              }
+
+              exportToCsv(filename, csvRows);
+            }
+
+            function exportToCsv(filename, rows) {
+              var processRow = function (row) {
+                var finalVal = "";
+                for (var j = 0; j < row.length; j++) {
+                  var innerValue = row[j] === null ? "" : row[j].toString();
+                  if (row[j] instanceof Date) {
+                    innerValue = row[j].toLocaleString();
+                  }
+                  var result = innerValue.replace(/"/g, '""');
+                  if (result.search(/("|,|\n)/g) >= 0) result = '"' + result + '"';
+                  if (j > 0) finalVal += ",";
+                  finalVal += result;
+                }
+                return finalVal + "\n";
+              };
+
+              var csvFile = "";
+              for (var i = 0; i < rows.length; i++) {
+                csvFile += processRow(rows[i]);
+              }
+
+              var blob = new Blob([csvFile], { type: "text/csv;charset=utf-8;" });
+              if (navigator.msSaveBlob) {
+                // IE 10+
+                navigator.msSaveBlob(blob, filename);
+              } else {
+                var link = document.createElement("a");
+                if (link.download !== undefined) {
+                  // feature detection
+                  // Browsers that support HTML5 download attribute
+                  var url = URL.createObjectURL(blob);
+                  link.setAttribute("href", url);
+                  link.setAttribute("download", filename);
+                  link.style.visibility = "hidden";
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                }
+              }
+            }
+            </script>
+      </div>
+
+      <div>
+          <div
+            id="evidence-gap-map-visualization-1007"
+            class="evidence-gap-map-visualization"
+            google-sheet-id="14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8"
+            data-table="1"
+            data-settings-table="3"
+            chart-settings-table="4"
+            chart-scale="0.8"
+            to-fix-dimensions="-7"
+          ></div>
+
+          <script defer src="https://code.highcharts.com/highcharts.js"></script>
+          <script defer src="https://code.highcharts.com/highcharts-more.js"></script>
+          <script defer src="https://code.highcharts.com/modules/annotations.js"></script>
+
+          <script defer>
+            /* An example of html tag
+            <div
+            id="evidence-gap-map-visualization-1007"
+            class="evidence-gap-map-visualization"
+            google-sheet-id="14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8"
+            data-table="1"
+            data-settings-table="3"
+            chart-settings-table="4"
+            chart-scale="0.8"
+            to-fix-dimensions="-7"
+            ></div> */
+
+            const evidenceGapMapVisualizationClass = "evidence-gap-map-visualization";
+
+            //Collect all elements, where evidence gap map is needed
+            let evidenceGapMapElementsArray = document.querySelectorAll(
+            "." + evidenceGapMapVisualizationClass
+            );
+
+            const evidenceGapMapValueSeparator = "|"; //Separator is used to separate values in cells of sheet
+            const typeOfBubble1 = "depend on outcomes"; // Type of evidence gap visualization
+            const typeOfBubble2 = "depend on article";
+
+            //Applying logic for every evidence gap map element
+            evidenceGapMapElementsArray.forEach((evidenceGapMapElement) => {
+            const googleSheetId =
+                evidenceGapMapElement.attributes["google-sheet-id"].value;
+            const mainComponentId = evidenceGapMapElement.attributes.id.value;
+            const chartContainerId = mainComponentId + "-chart-container";
+            const chartId = mainComponentId + "-chart";
+            const filterWrapperBlockId = mainComponentId + "-filter-wrapper-block";
+            const updateButtonId = mainComponentId + "-update-visualization-btn";
+            const studyListHeaderId = mainComponentId + "-study-list-header";
+            const studyListItemWrapperId = mainComponentId + "-study-list-item-wrapper";
+            const filterSelectClass = mainComponentId + "-visualization-filter-select";
+
+            const numberOfDataTableInGoogleSheet =
+                +evidenceGapMapElement.attributes["data-table"].value || 1;
+            const numberOfSettingsTableInGoogleSheet =
+                +evidenceGapMapElement.attributes["data-settings-table"].value || 3;
+            const numberOfChartSettingsTableInGoogleSheet =
+                +evidenceGapMapElement.attributes["chart-settings-table"].value || 4;
+            const chartScale =
+                +evidenceGapMapElement.attributes["chart-scale"].value || 0.8;
+            const toFixDimensions =
+                +evidenceGapMapElement.attributes["to-fix-dimensions"].value || 0; //due to different dimensions of grid and background polygons in visualization
+
+            //Get data from google sheet
+            getGoogleSheetForEvidenceMap(
+                googleSheetId,
+                numberOfDataTableInGoogleSheet,
+                numberOfSettingsTableInGoogleSheet,
+                numberOfChartSettingsTableInGoogleSheet
+            ).then((data) => {
+
+                //Create a component to which the remaining elements will be added
+                createInitialComponentForEvidenceMap(
+                mainComponentId,
+                chartContainerId,
+                chartId,
+                studyListHeaderId,
+                studyListItemWrapperId
+                );
+
+                //Initialize all variables for the visualization
+                const typeOfBubbles = data.settings.typeOfBubbles || typeOfBubble1;
+                let settings = getSettingsObjectForEvidenceMap(data.settings);
+                let chartSettings = getChartSettingsObjectForEvidenceMap(
+                data.chartSettings
+                );
+
+                let chartElement = document.getElementById(chartId);
+                let chartContainerElement = document.getElementById(chartContainerId);
+
+                let labelsArrayX = chartSettings.outcomesNarrowCategoriesTitles;
+                let labelsArrayY = chartSettings.interventionsNarrowCategoriesTitles;
+                let plotLinesX = [];
+                let plotLinesY = [];
+
+                let totalRowName = "";
+                let totalRowBackgroundColor = "";
+                if (typeOfBubbles == typeOfBubble1) {
+                totalRowName = chartSettings.totalRowName || "Total";
+                totalRowBackgroundColor = chartSettings.totalRowBackgroundColor || "gray";
+                labelsArrayY.push(totalRowName);
+                }
+                let filtersBlockArray = settings.filtersBlockArray;
+
+                // Variables for chart
+                const columnCount = labelsArrayX.length;
+                const rowCount = labelsArrayY.length;
+                const columnCategoryLabelHeight = 80;
+                const rowCategoryLabelWidth = 80;
+                const labelColumnsHeight = 250 + columnCategoryLabelHeight;
+                const labelRowWidth = 300 + rowCategoryLabelWidth;
+                const chartWidth = 2200;
+                const chartHeight = 2500;
+                const cellWidth = Math.round((chartWidth - labelRowWidth) / columnCount);
+                const cellHeight = Math.round(
+                (chartHeight - labelColumnsHeight) / rowCount
+                );
+
+                chartElement.style.height = chartHeight + "px";
+                chartElement.style.width = chartWidth + "px";
+                chartElement.style.transform = "scale(" + chartScale + ")";
+                chartElement.style.transformOrigin = "top left";
+                chartContainerElement.style.height =
+                chartHeight * (chartScale + 0.01) + "px";
+                chartContainerElement.style.width = chartWidth * chartScale + "px";
+
+                //Prepare data structure for highchart
+                let initialDataForChart = settings.bubbles;
+
+                //Prepare an array of studies
+                let arrayOfStudies = getStudiesArrayForEvidenceMap(data.sheet, settings);
+
+                //Prepare initial structure for filters data
+                filtersValuesToFilter = initializeStudiesValuesArrayForEvidenceMap(
+                filtersBlockArray
+                );
+
+                //Transform data in suitable for highcharts format
+                let dataForChart = getDataForChartForEvidenceMap(
+                typeOfBubbles,
+                arrayOfStudies,
+                labelsArrayX,
+                labelsArrayY,
+                cellWidth,
+                labelRowWidth,
+                chartHeight,
+                cellHeight,
+                labelColumnsHeight,
+                initialDataForChart,
+                totalRowName
+                );
+
+                //Creating grid and catigories for highchart
+                // need to create a grid strictly BEFORE chart initialization
+                prepareGridAndCategoriesForEvidenceMap(
+                mainComponentId,
+                chartSettings,
+                plotLinesX,
+                plotLinesY,
+                chartHeight,
+                columnCount,
+                rowCount,
+                cellWidth,
+                cellHeight,
+                labelRowWidth,
+                rowCategoryLabelWidth,
+                labelColumnsHeight,
+                toFixDimensions
+                );
+
+                //Add background polygons
+                let additionalItemsForChart = addBackgroundsForHighchartForEvidenceMap(
+                chartSettings,
+                chartWidth,
+                chartHeight,
+                cellWidth,
+                cellHeight,
+                labelRowWidth,
+                labelColumnsHeight,
+                totalRowName,
+                totalRowBackgroundColor,
+                toFixDimensions
+                );
+
+                //Create chart
+                let chart = getAndCreateChartForEvidenceMap(
+                chartId,
+                chartWidth,
+                chartHeight,
+                plotLinesX,
+                plotLinesY,
+                dataForChart,
+                additionalItemsForChart,
+                studyListHeaderId,
+                studyListItemWrapperId
+                );
+
+                //reinitialize filters data
+                let filtersValuesFromSheetArray = getArrayOfFiltersValueForEvidenceMap(
+                arrayOfStudies,
+                filtersBlockArray
+                );
+
+                //Add filters to page
+                createFiltersBlockComponentForEvidenceMap(
+                mainComponentId,
+                filterWrapperBlockId,
+                updateButtonId,
+                filterSelectClass,
+                filtersBlockArray,
+                filtersValuesFromSheetArray
+                );
+
+                //Set up all updating logic in this function
+                addUpdateBtnHandlerForEvidenceMap(
+                typeOfBubbles,
+                chart,
+                arrayOfStudies,
+                additionalItemsForChart,
+                filtersBlockArray,
+                filterSelectClass,
+                chartId,
+                updateButtonId,
+                studyListHeaderId,
+                studyListItemWrapperId,
+                labelsArrayX,
+                labelsArrayY,
+                plotLinesX,
+                plotLinesY,
+                cellWidth,
+                labelRowWidth,
+                rowCategoryLabelWidth,
+                chartHeight,
+                chartWidth,
+                cellHeight,
+                labelColumnsHeight,
+                initialDataForChart,
+                totalRowName,
+                totalRowBackgroundColor
+                );
+            });
+            });
+
+            function createInitialComponentForEvidenceMap(
+            mainComponentId,
+            chartContainerId,
+            chartId,
+            studyListHeaderId,
+            studyListItemWrapperId
+            ) {
+            let mainComponentElement = document.getElementById(mainComponentId);
+
+            let chartContainerElement = document.createElement("div");
+            chartContainerElement.id = chartContainerId;
+            chartContainerElement.setAttribute(
+                "style",
+                "overflow-x: scroll; overflow-y: hidden"
+            );
+            mainComponentElement.append(chartContainerElement);
+
+            let chartElement = document.createElement("div");
+            chartElement.id = chartId;
+            chartContainerElement.append(chartElement);
+
+            let studyListContainerElement = document.createElement("div");
+            studyListContainerElement.classList.add("study-list-container");
+            mainComponentElement.append(studyListContainerElement);
+
+            let studyListHeaderElement = document.createElement("div");
+            studyListHeaderElement.id = studyListHeaderId;
+            studyListContainerElement.append(studyListHeaderElement);
+
+            let studyListItemWrapperElement = document.createElement("div");
+            studyListItemWrapperElement.id = studyListItemWrapperId;
+            studyListContainerElement.append(studyListItemWrapperElement);
+            }
+
+            function addBackgroundsForHighchartForEvidenceMap(
+            chartSettings,
+            chartWidth,
+            chartHeight,
+            cellWidth,
+            cellHeight,
+            labelRowWidth,
+            labelColumnsHeight,
+            totalRowName,
+            totalRowBackgroundColor,
+            toFixDimensions
+            ) {
+            let resultArray = [];
+
+            //add outcome backgrounds
+            chartSettings.outcomesCategories.forEach((category, index, array) => {
+                if (category.color) {
+                coord1 = [labelRowWidth + cellWidth * index, chartHeight];
+                coord2 = [labelRowWidth + cellWidth * index + cellWidth, chartHeight];
+                coord3 = [
+                    labelRowWidth + cellWidth * index + cellWidth,
+                    chartHeight - labelColumnsHeight,
+                ];
+                coord4 = [
+                    labelRowWidth + cellWidth * index,
+                    chartHeight - labelColumnsHeight,
+                ];
+
+                let polygonItem = {
+                    name: "Polygon",
+                    type: "polygon",
+                    color: category.color,
+                    states: {
+                    inactive: {
+                        opacity: 1,
+                    },
+                    },
+                    showInLegend: false,
+                    enableMouseTracking: false,
+                    data: [coord1, coord2, coord3, coord4],
+                };
+                resultArray.push(polygonItem);
+                }
+            });
+
+            // add intervention backgrounds
+            chartSettings.interventionsCategories.forEach((category, index, array) => {
+                if (category.color) {
+                coord1 = [0, chartHeight - labelColumnsHeight - cellHeight * index];
+                coord2 = [
+                    labelRowWidth,
+                    chartHeight - labelColumnsHeight - cellHeight * index,
+                ];
+                coord3 = [
+                    labelRowWidth,
+                    chartHeight - labelColumnsHeight - cellHeight * (index + 1),
+                ];
+                coord4 = [0, chartHeight - labelColumnsHeight - cellHeight * (index + 1)];
+
+                let polygonItem = {
+                    name: "Polygon",
+                    type: "polygon",
+                    color: category.color,
+                    states: {
+                    inactive: {
+                        opacity: 1,
+                    },
+                    },
+                    showInLegend: false,
+                    enableMouseTracking: false,
+                    data: [coord1, coord2, coord3, coord4],
+                };
+                resultArray.push(polygonItem);
+                }
+            });
+
+            // add total background
+            if (totalRowName && totalRowBackgroundColor) {
+                coord1 = [
+                0,
+                chartHeight -
+                    labelColumnsHeight -
+                    cellHeight * chartSettings.interventionsCategories.length,
+                ];
+                coord2 = [
+                labelRowWidth,
+                chartHeight -
+                    labelColumnsHeight -
+                    cellHeight * chartSettings.interventionsCategories.length,
+                ];
+                coord3 = [
+                labelRowWidth,
+                chartHeight -
+                    labelColumnsHeight -
+                    cellHeight * (chartSettings.interventionsCategories.length + 1) +
+                    toFixDimensions,
+                ];
+                coord4 = [
+                0,
+                chartHeight -
+                    labelColumnsHeight -
+                    cellHeight * (chartSettings.interventionsCategories.length + 1) +
+                    toFixDimensions,
+                ];
+
+                let polygonItem = {
+                name: "Polygon",
+                type: "polygon",
+                color: totalRowBackgroundColor,
+                states: {
+                    inactive: {
+                    opacity: 1,
+                    },
+                },
+                showInLegend: false,
+                enableMouseTracking: false,
+                data: [coord1, coord2, coord3, coord4],
+                };
+                resultArray.push(polygonItem);
+            }
+
+            return resultArray;
+            }
+
+            function getValuesFromFilterBlockForEvidenceMap(
+            filtersBlockArray,
+            filterSelectClass
+            ) {
+            let resultArray = initializeStudiesValuesArrayForEvidenceMap(
+                filtersBlockArray
+            );
+            let filterList = document.querySelectorAll(`.${filterSelectClass}`);
+
+            filterList.forEach((filterNode) => {
+                document
+                .querySelectorAll(`#${filterNode.id}_itemList ul li`)
+                .forEach(function (item) {
+                    resultArray.forEach((filtersValuesItem) => {
+                    if (item.classList.contains("active")) {
+                        if (filterNode.name == filtersValuesItem.title) {
+                        filtersValuesItem.values.push(
+                            item
+                            .querySelector(".multiselect-checkbox")
+                            .getAttribute("data-val")
+                        );
+                        }
+                    }
+                    });
+                });
+            });
+
+            return resultArray;
+            }
+
+            function getArrayOfFiltersValueForEvidenceMap(studiesArray, filtersBlockArray) {
+            let filtersValuesFromSheetArray = initializeStudiesValuesArrayForEvidenceMap(
+                filtersBlockArray
+            );
+
+            // Create array with all filters values
+            studiesArray.forEach((study, index, array) => {
+                study.filterBlock.forEach((studyFilterItem, indexOfblockFilter) => {
+                studyFilterItem.values.forEach((studyFilterItemValue) => {
+                    filtersValuesFromSheetArray.forEach((filterArrayTemp) => {
+                    if (filterArrayTemp.title == studyFilterItem.title) {
+                        if (filterArrayTemp.values.indexOf(studyFilterItemValue) === -1) {
+                        filterArrayTemp.values.push(studyFilterItemValue.trim());
+                        }
+                    }
+                    });
+                });
+                });
+            });
+
+            return filtersValuesFromSheetArray;
+            }
+
+            function addUpdateBtnHandlerForEvidenceMap(
+            typeOfBubbles,
+            chart,
+            arrayOfStudies,
+            additionalItemsForChart,
+            filtersBlockArray,
+            filterSelectClass,
+            chartId,
+            updateButtonId,
+            studyListHeaderId,
+            studyListItemWrapperId,
+            labelsArrayX,
+            labelsArrayY,
+            plotLinesX,
+            plotLinesY,
+            cellWidth,
+            labelRowWidth,
+            rowCategoryLabelWidth,
+            chartHeight,
+            chartWidth,
+            cellHeight,
+            labelColumnsHeight,
+            initialDataForChart,
+            totalRowName,
+            totalRowBackgroundColor
+            ) {
+            document
+                .getElementById(updateButtonId)
+                .addEventListener("click", async function (event) {
+                let studyListHeaderElement = document.getElementById(studyListHeaderId);
+                let studyListElement = document.getElementById(studyListItemWrapperId);
+                studyListHeaderElement.innerHTML = "";
+                studyListElement.innerHTML = "";
+
+                filtersValuesFromFilterBlockArray = getValuesFromFilterBlockForEvidenceMap(
+                    filtersBlockArray,
+                    filterSelectClass
+                );
+
+                let filteredStudiesArray = getFilteredStudiesArrayForEvidenceMap(
+                    arrayOfStudies,
+                    filtersValuesFromFilterBlockArray
+                );
+
+                let dataForChartForFiltration = getDataForChartForEvidenceMap(
+                    typeOfBubbles,
+                    filteredStudiesArray,
+                    labelsArrayX,
+                    labelsArrayY,
+                    cellWidth,
+                    labelRowWidth,
+                    chartHeight,
+                    cellHeight,
+                    labelColumnsHeight,
+                    initialDataForChart,
+                    totalRowName
+                );
+
+                let chart = getAndCreateChartForEvidenceMap(
+                    chartId,
+                    chartWidth,
+                    chartHeight,
+                    plotLinesX,
+                    plotLinesY,
+                    dataForChartForFiltration,
+                    additionalItemsForChart,
+                    studyListHeaderId,
+                    studyListItemWrapperId
+                );
+
+                dataForChartForFiltration = [];
+                filtersValuesFromFilterBlockArray = initializeStudiesValuesArrayForEvidenceMap(
+                    filtersBlockArray
+                );
+                });
+            }
+
+            function getTitleAsHTML(title, link) {
+            if (typeof link === "string" && link.length > 0) {
+                return `<a href="${link}" target="_blank"> ${title} </a>`;
+            } else {
+                return title;
+            }
+            }
+
+            function getDataForChartForEvidenceMap(
+            typeOfBubbles,
+            studiesArray,
+            labelsArrayX,
+            labelsArrayY,
+            cellWidth,
+            labelRowWidth,
+            chartHeight,
+            cellHeight,
+            labelColumnsHeight,
+            initialDataForChart,
+            totalRowName
+            ) {
+            let dataForChartForFiltration = JSON.parse(
+                JSON.stringify(initialDataForChart)
+            );
+
+            dataForChartForFiltration.series.forEach((resultDataItem, index, array) => {
+                labelsArrayX.forEach((labelColumn, index, array) => {
+                labelsArrayY.forEach((labelRow, index, array) => {
+                    let tempArray = [];
+
+                    switch (typeOfBubbles) {
+                    case typeOfBubble2:
+                        //for each cell check whether the row and column values match
+                        studiesArray.forEach((studyItem, index, array) => {
+                        studyItem.bubbleTypesArray.forEach((bubbleType, index, array) => {
+                            if (
+                            bubbleType.toLowerCase() == resultDataItem.name.toLowerCase()
+                            ) {
+                            if (
+                                studyItem.columnFilterArray.indexOf(labelColumn.trim()) >
+                                -1 &&
+                                studyItem.rowFilterArray.indexOf(labelRow.trim()) > -1
+                            ) {
+                                if (tempArray.indexOf(studyItem.studyTitle) === -1) {
+                                // tempArray.push(studyItem.studyTitle.trim());
+                                tempArray.push(
+                                    getTitleAsHTML(studyItem.studyTitle.trim(), studyLink)
+                                );
+                                }
+                            }
+                            }
+                        });
+                        });
+
+                        break;
+
+                    case typeOfBubble1:
+                    default:
+                        let isColumnFilterMatched = false;
+                        //for each cell check whether the row and column values match
+                        studiesArray.forEach((studyItem, index, array) => {
+                        studyItem.bubbleTypesArray.forEach((bubbleType, index, array) => {
+                            //get value from square brackets
+                            if (bubbleType.match(/\[(.*?)\]/)) {
+                            if (
+                                bubbleType.match(/\[(.*?)\]/)[1] &&
+                                bubbleType.match(/\[(.*?)\]/)[1].toLowerCase() ==
+                                resultDataItem.name.toLowerCase()
+                            ) {
+                                isColumnFilterMatched = false;
+                                for (columnFilter of studyItem.columnFilterArray) {
+                                if (
+                                    columnFilter.split("[")[0].trim() == labelColumn.trim()
+                                ) {
+                                    isColumnFilterMatched = true;
+                                    break;
+                                }
+                                }
+
+                                if (
+                                (labelRow == totalRowName && isColumnFilterMatched) ||
+                                (isColumnFilterMatched &&
+                                    studyItem.rowFilterArray.indexOf(labelRow.trim()) > -1)
+                                ) {
+                                if (
+                                    tempArray.indexOf(
+                                    getTitleAsHTML(
+                                        studyItem.studyTitle.trim(),
+                                        studyItem.studyLink
+                                    )
+                                    ) === -1
+                                ) {
+                                    tempArray.push(
+                                    getTitleAsHTML(
+                                        studyItem.studyTitle.trim(),
+                                        studyItem.studyLink
+                                    )
+                                    );
+                                }
+                                }
+                            }
+                            }
+                        });
+                        });
+                    }
+
+                    const xCoord = getXCoord(
+                    labelColumn,
+                    resultDataItem.name,
+                    labelRowWidth,
+                    cellWidth,
+                    labelsArrayX,
+                    initialDataForChart
+                    );
+                    const yCoord = getYCoord(
+                    labelRow,
+                    resultDataItem.name,
+                    chartHeight,
+                    cellHeight,
+                    labelColumnsHeight,
+                    labelsArrayY
+                    );
+
+                    let tempObj = {
+                    x: xCoord,
+                    y: yCoord,
+                    z: tempArray.length * 2,
+                    name: tempArray.length + " studies",
+                    studies: tempArray,
+                    column: labelColumn,
+                    row: labelRow,
+                    };
+
+                    if (tempObj.studies.length > 0) {
+                    resultDataItem.data.push(tempObj);
+                    }
+                });
+                });
+            });
+            return dataForChartForFiltration;
+            }
+
+            function getFilteredStudiesArrayForEvidenceMap(
+            studiesArray,
+            filtersValuesFromFilterBlockArray
+            ) {
+            let resultArray = studiesArray.filter((study) => {
+                let isAllFiltersMatchesFlagArray = [];
+
+                study.filterBlock.forEach((studyFilter) => {
+                let isAtLeastOneFilterValueMatch = false;
+                filtersValuesFromFilterBlockArray.forEach((fblockFilter) => {
+                    if (studyFilter.title == fblockFilter.title) {
+                    if (
+                        fblockFilter.values.length == 0 &&
+                        studyFilter.values.length == 0
+                    ) {
+                        //if no filter value is selected and no study filter value exists
+                        isAtLeastOneFilterValueMatch = true;
+                    } else if (
+                        fblockFilter.values.length == 0 &&
+                        studyFilter.values.length > 0
+                    ) {
+                        //if no filter value is selected and study filter values exist
+                        isAtLeastOneFilterValueMatch = true;
+                    } else if (
+                        fblockFilter.values.length > 0 &&
+                        studyFilter.values.length == 0
+                    ) {
+                        //if filter value is selected but no study filter value exists
+                        isAtLeastOneFilterValueMatch = false;
+                    } else {
+                        studyFilter.values.forEach((studyFilterValue) => {
+                        fblockFilter.values.forEach((fblockFilterValue) => {
+                            if (studyFilterValue == fblockFilterValue) {
+                            isAtLeastOneFilterValueMatch = true;
+                            }
+                        });
+                        });
+                    }
+                    }
+                });
+
+                isAllFiltersMatchesFlagArray.push(isAtLeastOneFilterValueMatch);
+                });
+
+                if (isAllFiltersMatchesFlagArray.indexOf(false) === -1) {
+                return true;
+                }
+            });
+
+            return resultArray;
+            }
+
+            function createStudyListTitleForEvidenceMap(
+            studyListHeaderId,
+            studyTitlesArray,
+            columnName,
+            rowName
+            ) {
+            let studyListHeaderElement = document.getElementById(studyListHeaderId);
+            studyListHeaderElement.classList.add("study-list-header");
+            studyListHeaderElement.innerHTML =
+                columnName +
+                " - " +
+                rowName +
+                "<br/>" +
+                "Studies (" +
+                studyTitlesArray.length +
+                "): ";
+            }
+
+            function createStudyListForEvidenceMap(
+            studyListItemWrapperId,
+            studyTitlesArray
+            ) {
+            let studyListElement = document.getElementById(studyListItemWrapperId);
+            studyListElement.innerHTML = "";
+
+            studyTitlesArray.forEach((title) => {
+                let studyListItemElement = document.createElement("div");
+                studyListItemElement.classList.add("study-list-item");
+                studyListItemElement.innerHTML = title;
+                studyListElement.append(studyListItemElement);
+            });
+
+            let studyListWrapperButtonElement = document.createElement("a");
+            studyListWrapperButtonElement.id = studyListItemWrapperId + "-btn";
+            studyListWrapperButtonElement.classList.add("wp-block-button__link");
+            studyListWrapperButtonElement.classList.add("has-background");
+            studyListWrapperButtonElement.classList.add(
+                "has-luminous-vivid-orange-background-color"
+            );
+            studyListWrapperButtonElement.innerHTML = "Export to CSV";
+            studyListElement.append(studyListWrapperButtonElement);
+
+            document
+                .getElementById(studyListItemWrapperId + "-btn")
+                .addEventListener("click", function () {
+                downloadCSVForEvidenceMap(studyListItemWrapperId, "evidence-gap-map.csv");
+                });
+            }
+
+            function getAndCreateChartForEvidenceMap(
+            chartId,
+            chartWidth,
+            chartHeight,
+            plotLinesX,
+            plotLinesY,
+            dataForChart,
+            additionalItemsForChart,
+            studyListHeaderId,
+            studyListItemWrapperId
+            ) {
+            var chart = Highcharts.chart(chartId, {
+                chart: {
+                type: "bubble",
+                plotBorderWidth: 1,
+                marginTop: 100,
+                zoomType: "",
+                },
+
+                legend: {
+                enabled: true,
+                align: "center",
+                verticalAlign: "top",
+                floating: true,
+                x: 0,
+                y: 20,
+                itemDistance: 50,
+                symbolPadding: 20,
+                itemStyle: {
+                    fontSize: "20px",
+                },
+                },
+
+                title: {
+                text: "",
+                },
+
+                subtitle: {
+                text: "",
+                },
+
+                xAxis: {
+                lineWidth: 0,
+                gridLineWidth: 0,
+                labels: {
+                    enabled: false,
+                },
+                title: {
+                    text: null,
+                },
+                tickWidth: 0,
+                tickLength: 0,
+                min: 0,
+                max: chartWidth,
+                plotLines: plotLinesX,
+                },
+
+                yAxis: {
+                lineWidth: 0,
+                gridLineWidth: 0,
+                labels: {
+                    enabled: false,
+                },
+                title: {
+                    text: null,
+                },
+                min: 0,
+                max: chartHeight,
+                plotLines: plotLinesY,
+                },
+
+                tooltip: {
+                useHTML: true,
+                followPointer: false,
+                formatter: function () {
+                    let result =
+                    "<div style='max-height: 100px; background: none;'>" +
+                    '<div style="margin: 0; padding: 0 0.5rem"><th colspan="2"><h5>' +
+                    this.point.name +
+                    "</h5></th></div></div>";
+
+                    return result;
+                },
+                padding: 5,
+                style: {
+                    pointerEvents: "auto",
+                },
+                },
+
+                plotOptions: {
+                bubble: {
+                    minSize: 3,
+                    maxSize: 50,
+                    zMin: 0,
+                    zMax: 100,
+                },
+                series: {
+                    cursor: "pointer",
+                    point: {
+                    events: {
+                        click: function () {
+                        createStudyListTitleForEvidenceMap(
+                            studyListHeaderId,
+                            this.studies,
+                            this.column,
+                            this.row
+                        );
+                        createStudyListForEvidenceMap(
+                            studyListItemWrapperId,
+                            this.studies
+                        );
+                        document.getElementById(studyListItemWrapperId).scrollIntoView({
+                            block: "center",
+                            inline: "nearest",
+                            behavior: "smooth",
+                        });
+                        },
+                    },
+                    },
+                },
+                },
+
+                series: dataForChart.series.concat(additionalItemsForChart),
+            });
+
+            return chart;
+            }
+
+            function createFiltersBlockComponentForEvidenceMap(
+            mainComponentId,
+            filterWrapperBlockId,
+            updateButtonId,
+            filterSelectClass,
+            filtersBlockArray,
+            filtersValuesFromSheetArray
+            ) {
+            let updateButtonWrapper = document.createElement("div");
+            updateButtonWrapper.classList.add("button-block-wrapper");
+            updateButtonWrapper.setAttribute(
+                "style",
+                "display: flex; align-items: center; justify-content: center; "
+            );
+
+            document.getElementById(mainComponentId).prepend(updateButtonWrapper);
+
+            // Add update button for filters
+            let filterWrapperBlockButtonElement = document.createElement("div");
+            filterWrapperBlockButtonElement.classList.add("wp-block-button");
+            filterWrapperBlockButtonElement.classList.add("custom-filter-btn");
+            updateButtonWrapper.append(filterWrapperBlockButtonElement);
+
+            // Id of this element is used in another place too
+            let filterWrapperBlockButtonLinkElement = document.createElement("a");
+            filterWrapperBlockButtonLinkElement.id = updateButtonId;
+            filterWrapperBlockButtonLinkElement.classList.add("wp-block-button__link");
+            filterWrapperBlockButtonLinkElement.classList.add("has-background");
+            filterWrapperBlockButtonLinkElement.classList.add(
+                "has-luminous-vivid-orange-background-color"
+            );
+            filterWrapperBlockButtonLinkElement.innerHTML = "Update";
+            filterWrapperBlockButtonElement.append(filterWrapperBlockButtonLinkElement);
+
+            // Add filters' block element
+            let filterWrapperBlockElement = document.createElement("div");
+            filterWrapperBlockElement.classList.add("filter-wrapper-block");
+            filterWrapperBlockElement.id = filterWrapperBlockId;
+            document.getElementById(mainComponentId).prepend(filterWrapperBlockElement);
+
+            filtersBlockArray.forEach((filtersBlockArrayItem, indexOfblockFilter) => {
+                // Add filters' wrapper element
+                let filterWrapperElement = document.createElement("div");
+                filterWrapperElement.classList.add("filter-wrapper");
+                filterWrapperElement.setAttribute(
+                "style",
+                "display: flex; align-items: center"
+                );
+                filterWrapperBlockElement.append(filterWrapperElement);
+
+                // Add title of filter
+                let filterTitleElement = document.createElement("div");
+                filterTitleElement.innerHTML = filtersBlockArrayItem.title;
+                filterTitleElement.setAttribute("style", "padding: 0 1em");
+                filterWrapperElement.append(filterTitleElement);
+
+                // Add select to filter
+                let filterSelectElement = document.createElement("select");
+                filterSelectElement.id =
+                mainComponentId +
+                "-visualization-filter-" +
+                filtersBlockArrayItem.title.replace(/\W/g, "_");
+                filterSelectElement.name = filtersBlockArrayItem.title;
+                filterSelectElement.classList.add(filterSelectClass);
+                filterSelectElement.setAttribute("style", "margin: 1rem 2rem 1rem 0");
+                filterSelectElement.setAttribute("multiple", "");
+                filterWrapperElement.append(filterSelectElement);
+
+                // Add default options to select
+
+                filtersBlockArrayItem.defaultValues.forEach((defaultFilterValue) => {
+                let filterSelectOptionElement = document.createElement("option");
+                filterSelectOptionElement.innerHTML = defaultFilterValue;
+                filterSelectOptionElement.setAttribute("value", defaultFilterValue);
+                filterSelectElement.append(filterSelectOptionElement);
+                });
+
+                // Add unique filter's values from google sheet
+                filtersValuesFromSheetArray.forEach((filtersValuesFromSheetArrayItem) => {
+                if (
+                    filtersBlockArrayItem.title == filtersValuesFromSheetArrayItem.title
+                ) {
+                    filtersValuesFromSheetArrayItem.values.forEach((filterValue) => {
+                    let isValueAlreadyAdded = false;
+                    Object.values(filterSelectElement.options).forEach(
+                        (existedOptionValue) => {
+                        if (existedOptionValue.innerHTML == filterValue.trim()) {
+                            isValueAlreadyAdded = true;
+                        }
+                        }
+                    );
+
+                    if (!isValueAlreadyAdded && filterValue) {
+                        let filterSelectOptionElement = document.createElement("option");
+                        filterSelectOptionElement.innerHTML = filterValue;
+                        filterSelectOptionElement.setAttribute("value", filterValue);
+                        filterSelectElement.append(filterSelectOptionElement);
+                    }
+                    });
+                }
+                });
+            });
+
+            // Add multiselection to filters
+            let filterList = document.querySelectorAll(`.${filterSelectClass}`);
+            filterList.forEach((filterNode) => {
+                document.multiselect(`#${filterNode.id}`);
+            });
+            }
+
+            function getStudiesArrayForEvidenceMap(data, settings) {
+            let studiesArray = [];
+            const cellsArray = data.feed.entry;
+            const numberOfColumns = getNumberOfColumnsForEvidenceMap(cellsArray);
+            const filtersBlockArray = settings.filtersBlockArray;
+
+            let tempStudyTitle = "";
+            let tempStudyLink = "";
+            let tempTypesArray = [];
+            let tempColumnFilterArray = [];
+            let tempRowFilterArray = [];
+            let tempFiltersBlockArray = initializeStudiesValuesArrayForEvidenceMap(
+                filtersBlockArray
+            );
+
+            cellsArray.forEach((element, index, array) => {
+                if (index >= numberOfColumns) {
+                if (element.title["$t"].includes(settings.studyTitleLetter)) {
+                    tempStudyTitle = element.content["$t"].trim();
+                }
+
+                if (element.title["$t"].includes(settings.studyLinkLetter)) {
+                    tempStudyLink = element.content["$t"].trim();
+                }
+
+                if (element.title["$t"].includes(settings.bubbleTypeLetter)) {
+                    element.content["$t"]
+                    .split(evidenceGapMapValueSeparator)
+                    .forEach((cellValue) => {
+                        tempTypesArray.push(cellValue.trim());
+                    });
+                }
+                if (element.title["$t"].includes(settings.columnFilterLetter)) {
+                    element.content["$t"]
+                    .split(evidenceGapMapValueSeparator)
+                    .forEach((cellValue) => {
+                        tempColumnFilterArray.push(cellValue.trim());
+                    });
+                }
+                if (element.title["$t"].includes(settings.rowFilterLetter)) {
+                    element.content["$t"]
+                    .split(evidenceGapMapValueSeparator)
+                    .forEach((cellValue) => {
+                        tempRowFilterArray.push(cellValue.trim());
+                    });
+                }
+
+                filtersBlockArray.forEach((item, index) => {
+                    if (element.title["$t"].includes(item.letter)) {
+                    element.content["$t"]
+                        .split(evidenceGapMapValueSeparator)
+                        .forEach((cellValue) => {
+                        tempFiltersBlockArray.forEach((filterItem) => {
+                            if (filterItem.title == item.title.trim()) {
+                            filterItem.values.push(cellValue.trim());
+                            }
+                        });
+                        });
+                    }
+                });
+
+                if (
+                    typeof array[index + 1] === "undefined" ||
+                    array[index].title["$t"] > array[index + 1].title["$t"]
+                ) {
+                    // If study has title and country - add it to array
+                    if (
+                    tempStudyTitle.length > 0 &&
+                    tempTypesArray.length > 0 &&
+                    tempColumnFilterArray.length > 0 &&
+                    tempRowFilterArray.length > 0
+                    ) {
+                    let tempObj = {
+                        studyTitle: tempStudyTitle,
+                        studyLink: tempStudyLink,
+                        bubbleTypesArray: tempTypesArray,
+                        columnFilterArray: tempColumnFilterArray,
+                        rowFilterArray: tempRowFilterArray,
+                        filterBlock: tempFiltersBlockArray,
+                    };
+
+                    studiesArray.push(tempObj);
+
+                    tempStudyTitle = "";
+                    studyLink = "";
+                    tempTypesArray = [];
+                    tempColumnFilterArray = [];
+                    tempRowFilterArray = [];
+                    tempFiltersBlockArray = initializeStudiesValuesArrayForEvidenceMap(
+                        filtersBlockArray
+                    );
+                    } else {
+                    tempStudyTitle = "";
+                    studyLink = "";
+                    tempTypesArray = [];
+                    tempColumnFilterArray = [];
+                    tempRowFilterArray = [];
+                    tempFiltersBlockArray = initializeStudiesValuesArrayForEvidenceMap(
+                        filtersBlockArray
+                    );
+                    }
+                }
+                }
+            });
+
+            return studiesArray;
+            }
+
+            function getXCoord(
+            labelColumn,
+            itemType,
+            labelRowWidth,
+            cellWidth,
+            labelsArrayX,
+            initialDataForChart
+            ) {
+            let horizontalShift = 0;
+            let result = 0;
+
+            switch (itemType) {
+                case initialDataForChart.series[0].name:
+                horizontalShift = 0;
+                result =
+                    labelRowWidth +
+                    (labelsArrayX.indexOf(labelColumn) + 1) * cellWidth -
+                    cellWidth / 2 +
+                    horizontalShift;
+                break;
+
+                case initialDataForChart.series[1].name:
+                horizontalShift = 10;
+                result =
+                    labelRowWidth +
+                    (labelsArrayX.indexOf(labelColumn) + 1) * cellWidth -
+                    cellWidth / 3 +
+                    horizontalShift;
+                break;
+
+                case initialDataForChart.series[2].name:
+                horizontalShift = -10;
+                result =
+                    labelRowWidth +
+                    (labelsArrayX.indexOf(labelColumn) + 1) * cellWidth -
+                    (cellWidth * 2) / 3 +
+                    horizontalShift;
+                break;
+
+                default:
+                break;
+            }
+
+            return result;
+            }
+
+            function getYCoord(
+            labelRow,
+            itemType,
+            chartHeight,
+            cellHeight,
+            labelColumnsHeight,
+            labelsArrayY
+            ) {
+            return (
+                chartHeight -
+                labelColumnsHeight -
+                (labelsArrayY.indexOf(labelRow) + 1) * cellHeight +
+                cellHeight / 2
+            );
+            }
+
+            function prepareGridAndCategoriesForEvidenceMap(
+            mainComponentId,
+            chartSettings,
+            plotLinesX,
+            plotLinesY,
+            chartHeight,
+            columnCount,
+            rowCount,
+            cellWidth,
+            cellHeight,
+            labelRowWidth,
+            rowCategoryLabelWidth,
+            labelColumnsHeight,
+            toFixDimensions
+            ) {
+            const fontSize = 16;
+            chartSettings.outcomesCategories.forEach((category, categoryIndex, array) => {
+                const itemX = labelRowWidth + cellWidth * categoryIndex + cellWidth / 2;
+                const itemY = labelColumnsHeight - fontSize * 2;
+
+                let labelText = "";
+                if (category.link) {
+                labelText =
+                    '<a class="' +
+                    mainComponentId +
+                    '-category-to-anchor-link" ' +
+                    'style="text-decoration: none !important;" ' +
+                    ' target="_blank" ' +
+                    ' href="' +
+                    category.link +
+                    '">' +
+                    category.title +
+                    "</a>";
+                } else {
+                labelText = category.title;
+                }
+
+                plotLinesX.push({
+                value: itemX,
+                color: "#cccccc",
+                width: 0,
+                zIndex: 10,
+                label: {
+                    useHTML: true,
+                    text: labelText,
+                    rotation: 270,
+                    x: 0,
+                    y: itemY,
+                    style: { fontSize: fontSize + "px" },
+                },
+                });
+            });
+
+            chartSettings.interventionsCategories.forEach(
+                (category, categoryIndex, array) => {
+                const itemX = rowCategoryLabelWidth + fontSize * 2;
+                const itemY =
+                    chartHeight -
+                    labelColumnsHeight -
+                    cellHeight * (categoryIndex + 1) +
+                    cellHeight / 2 -
+                    fontSize / 2;
+
+                let labelText = "";
+                if (category.link) {
+                    labelText =
+                    '<a class="' +
+                    mainComponentId +
+                    '-category-to-anchor-link" ' +
+                    'style="text-decoration: none !important;" ' +
+                    ' target="_blank" ' +
+                    ' href="' +
+                    category.link +
+                    '">' +
+                    category.title +
+                    "</a>";
+                } else {
+                    labelText = category.title;
+                }
+
+                plotLinesY.push({
+                    value: itemY,
+                    color: "#cccccc",
+                    width: 0,
+                    zIndex: 10,
+                    label: {
+                    text: labelText,
+                    rotation: 360,
+                    x: itemX,
+                    y: 0,
+                    style: { fontSize: fontSize + "px" },
+                    },
+                });
+                }
+            );
+
+            let numberOfAlreadyCountedCategories = 0;
+            chartSettings.interventionsBroadCategoriesTitles.forEach(
+                (broadCategory, broadIndex) => {
+                numberOfNarrowCategories = 0;
+
+                //count narrow categories
+                chartSettings.interventionsCategories.forEach((category) => {
+                    if (category.broadCategoryTitle == broadCategory) {
+                    numberOfNarrowCategories++;
+                    }
+                });
+
+                const fontSize = 20;
+                let itemX = 30 + fontSize / 2;
+                let itemY =
+                    chartHeight -
+                    labelColumnsHeight -
+                    cellHeight * numberOfNarrowCategories * 0.5 -
+                    cellHeight * numberOfAlreadyCountedCategories;
+
+                plotLinesY.push({
+                    value: itemY,
+                    align: "center",
+                    color: "#cccccc",
+                    width: 0,
+                    zIndex: 10,
+                    label: {
+                    text: broadCategory,
+                    verticalAlign: "center",
+                    textAlign: "center",
+                    rotation: 270,
+                    x: itemX,
+                    y: 0,
+                    style: { fontSize: fontSize + "px" },
+                    },
+                });
+
+                numberOfAlreadyCountedCategories += numberOfNarrowCategories;
+                }
+            );
+
+            numberOfAlreadyCountedCategories = 0;
+            chartSettings.outcomesBroadCategoriesTitles.forEach(
+                (broadCategory, broadIndex) => {
+                numberOfNarrowCategories = 0;
+                //count narrow categories
+                chartSettings.outcomesCategories.forEach((category) => {
+                    if (category.broadCategoryTitle == broadCategory) {
+                    numberOfNarrowCategories++;
+                    }
+                });
+
+                const fontSize = 20;
+                let itemY = 40;
+                let itemX =
+                    labelRowWidth +
+                    cellWidth * numberOfNarrowCategories * 0.5 +
+                    cellWidth * numberOfAlreadyCountedCategories;
+
+                plotLinesX.push({
+                    value: itemX,
+                    align: "center",
+                    color: "#cccccc",
+                    width: 0,
+                    zIndex: 10,
+                    label: {
+                    text: broadCategory,
+                    verticalAlign: "center",
+                    textAlign: "center",
+                    rotation: 0,
+                    x: 0,
+                    y: itemY,
+                    style: { fontSize: fontSize + "px" },
+                    },
+                });
+
+                numberOfAlreadyCountedCategories += numberOfNarrowCategories;
+                }
+            );
+
+            // Add vertical lines
+            for (i = 1; i < columnCount; i++) {
+                plotLinesX.push({
+                value: labelRowWidth + cellWidth * i,
+                color: "#cccccc",
+                width: 1,
+                id: "plot-line-x" + i,
+                });
+            }
+
+            // Add horizontal lines
+            for (i = 1; i < rowCount; i++) {
+                plotLinesY.push({
+                value: cellHeight * i - toFixDimensions,
+                color: "#cccccc",
+                width: 1,
+                id: "plot-line-y-" + i,
+                });
+            }
+
+            //Add horizontal line after labels on top
+            plotLinesX.push({
+                value: labelRowWidth,
+                color: "#cccccc",
+                width: 1,
+                id: "plot-line-label-x",
+            });
+
+            //Add vertical line after labels on left
+            plotLinesY.push({
+                value: chartHeight - labelColumnsHeight,
+                color: "#cccccc",
+                width: 1,
+                id: "plot-line-label-y",
+            });
+
+            // to remove
+            // chart.yAxis[0].removePlotLine(id);
+            }
+
+            async function getGoogleSheetForEvidenceMap(
+            spreadsheetID,
+            numberOfDataTableInGoogleSheet,
+            numberOfSettingsTableInGoogleSheet,
+            numberOfChartSettingsTableInGoogleSheet
+            ) {
+            // https://www.youtube.com/watch?v=MDKph2XhqXc
+            try {
+                const response = await fetch(
+                `https://spreadsheets.google.com/feeds/worksheets/${spreadsheetID}/public/basic?alt=json`
+                );
+                const responseJSON = await response.json();
+                const sheet = await fetch(
+                responseJSON.feed.entry[numberOfDataTableInGoogleSheet - 1].link[1].href +
+                    "?alt=json"
+                );
+                const sheetJSON = await sheet.json();
+
+                const settings = await fetch(
+                responseJSON.feed.entry[numberOfSettingsTableInGoogleSheet - 1].link[1]
+                    .href + "?alt=json"
+                );
+                const settingsJSON = await settings.json();
+
+                const chartSettings = await fetch(
+                responseJSON.feed.entry[numberOfChartSettingsTableInGoogleSheet - 1]
+                    .link[1].href + "?alt=json"
+                );
+                const chartSettingsJSON = await chartSettings.json();
+
+                return {
+                sheet: sheetJSON,
+                settings: settingsJSON,
+                chartSettings: chartSettingsJSON,
+                };
+            } catch (error) {
+                console.log(error);
+            }
+            }
+
+            function getSettingsObjectForEvidenceMap(settings) {
+            const cellsArray = settings.feed.entry;
+            const numberOfColumns = getNumberOfColumnsForEvidenceMap(cellsArray);
+
+            // Example of settings table
+            //||Study title column letter||Study link column letter ||Type column letter||Column narrow category letter||Row narrow category letter||Filter titles||Filter column letter||Filter default values||
+            //||D                        ||D                        ||N                 ||E                            ||H                         ||Study Method ||O                   || First | Second      ||
+
+            const columnLetterOfStudyTitleColumnLetter = "A";
+            const columnLetterOfStudyLinkColumnLetter = "B";
+            const columnLetterOfColumnNarrowCategoryColumnLetter = "C";
+            const columnLetterOfRowNarrowCategoryColumnLetter = "D";
+            const columnLetterOfTypeOfBubbles = "E";
+            const columnLetterOfTypeOfBubblesColumnLetter = "F";
+            const columnLetterOfNameOfBubbles = "G";
+            const columnLetterOfColorOfBubbles = "H";
+            const columnLetterOfFilterTitles = "I";
+            const columnLetterOfFilterColumnLetter = "J";
+            const columnLetterOfFilterDefaultValues = "K";
+
+            let tempStudyTitleLetter = "";
+            let tempStudyLinkLetter = "";
+            let tempColumnFilterLetter = "";
+            let tempRowFilterLetter = "";
+            let tempTypeOfBubbles = "";
+            let tempBubbleTypeLetter = "";
+            let tempBubbles = { series: [] };
+            let tempFiltersBlockArray = [];
+
+            let tempFiltersBlockItem = {
+                letter: "",
+                title: "",
+                defaultValues: [],
+            };
+
+            let tempBubbleItem = {
+                name: "",
+                color: "",
+                data: [],
+            };
+
+            cellsArray.forEach((element, index, array) => {
+                if (index >= numberOfColumns) {
+                // Study title column letter
+                if (
+                    !tempStudyTitleLetter &&
+                    element.title["$t"].includes(columnLetterOfStudyTitleColumnLetter)
+                ) {
+                    tempStudyTitleLetter = element.content["$t"].trim();
+                }
+
+                //Study link column letter
+                if (
+                    !tempStudyLinkLetter &&
+                    element.title["$t"].includes(columnLetterOfStudyLinkColumnLetter)
+                ) {
+                    tempStudyLinkLetter = element.content["$t"].trim();
+                }
+
+                //Column Categories (or Column Filter) - Outcome narrow category column letter
+                if (
+                    !tempColumnFilterLetter &&
+                    element.title["$t"].includes(
+                    columnLetterOfColumnNarrowCategoryColumnLetter
+                    )
+                ) {
+                    tempColumnFilterLetter = element.content["$t"].trim();
+                }
+
+                //Row Categories (or Row Filter) - Intervention narrow category column letter
+                if (
+                    !tempRowFilterLetter &&
+                    element.title["$t"].includes(
+                    columnLetterOfRowNarrowCategoryColumnLetter
+                    )
+                ) {
+                    tempRowFilterLetter = element.content["$t"].trim();
+                }
+
+                //Type of bubbles ( depend on article | depend on outcomes)
+                if (
+                    !tempTypeOfBubbles &&
+                    element.title["$t"].includes(columnLetterOfTypeOfBubbles)
+                ) {
+                    tempTypeOfBubbles = element.content["$t"].toLowerCase().trim();
+                }
+
+                //Type of bubbles column letter
+                if (
+                    !tempBubbleTypeLetter &&
+                    element.title["$t"].includes(columnLetterOfTypeOfBubblesColumnLetter)
+                ) {
+                    tempBubbleTypeLetter = element.content["$t"].trim();
+                }
+
+                //Names of bubbles
+                if (element.title["$t"].includes(columnLetterOfNameOfBubbles)) {
+                    tempBubbleItem.name = element.content["$t"].trim();
+                }
+                //Color of bubbles
+                if (
+                    tempBubbleItem.name == array[index - 1].content["$t"].trim() &&
+                    element.title["$t"].includes(columnLetterOfColorOfBubbles)
+                ) {
+                    tempBubbleItem.color = element.content["$t"].trim();
+                }
+
+                //Filter titles
+                if (element.title["$t"].includes(columnLetterOfFilterTitles)) {
+                    tempFiltersBlockItem.title = element.content["$t"].trim();
+                }
+
+                //Filter column letter
+                if (
+                    tempFiltersBlockItem.title == array[index - 1].content["$t"].trim() &&
+                    element.title["$t"].includes(columnLetterOfFilterColumnLetter)
+                ) {
+                    tempFiltersBlockItem.letter = element.content["$t"].trim();
+                }
+
+                //Filter default values
+                if (
+                    tempFiltersBlockItem.title == array[index - 2].content["$t"].trim() &&
+                    element.title["$t"].includes(columnLetterOfFilterDefaultValues)
+                ) {
+                    element.content["$t"]
+                    .split(evidenceGapMapValueSeparator)
+                    .forEach((cellValue) => {
+                        tempFiltersBlockItem.defaultValues.push(cellValue.trim());
+                    });
+                }
+
+                if (
+                    typeof array[index + 1] === "undefined" ||
+                    array[index].title["$t"] > array[index + 1].title["$t"]
+                ) {
+                    // Add Bubble to Bubbles' object
+                    if (tempBubbleItem.name) {
+                    tempBubbles.series.push(tempBubbleItem);
+                    }
+
+                    tempBubbleItem = {
+                    name: "",
+                    color: "",
+                    data: [],
+                    };
+
+                    // Add Filter to Filters' object
+                    if (tempFiltersBlockItem.title && tempFiltersBlockItem.letter) {
+                    tempFiltersBlockArray.push(tempFiltersBlockItem);
+                    }
+
+                    tempFiltersBlockItem = {
+                    letter: "",
+                    title: "",
+                    defaultValues: [],
+                    };
+                }
+                }
+            });
+
+            let resultObj = {
+                studyTitleLetter: tempStudyTitleLetter,
+                studyLinkLetter: tempStudyLinkLetter,
+                columnFilterLetter: tempColumnFilterLetter,
+                rowFilterLetter: tempRowFilterLetter,
+                typeOfBubbles: tempTypeOfBubbles,
+                bubbleTypeLetter: tempBubbleTypeLetter,
+                bubbles: tempBubbles,
+                filtersBlockArray: tempFiltersBlockArray,
+            };
+
+            return resultObj;
+            }
+
+            function getChartSettingsObjectForEvidenceMap(chartSettings) {
+            const cellsArray = chartSettings.feed.entry;
+            const numberOfColumns = getNumberOfColumnsForEvidenceMap(cellsArray);
+            let resultObj = {};
+
+            // Example of settings table
+            //||Outcome broad categories||Outcome narrow categories||Outcome narrow categories Color||Intervention broad categories||Intervention narrow categories||Intervention categories Color||
+            //||D                       ||N                        ||E                               ||H                            ||Study Method                  ||O                             ||
+
+            const columnLetterOfOutcomeNarrowCategories = "A";
+            const columnLetterOfOutcomeBroadCategories = "B";
+            const columnLetterOfOutcomeNarrowCategoriesColor = "C";
+            const columnLetterOfOutcomeNarrowCategoriesLinks = "D";
+            const columnLetterOfInterventionNarrowCategories = "E";
+            const columnLetterOfInterventionBroadCategories = "F";
+            const columnLetterOfInterventionNarrowCategoriesColor = "G";
+            const columnLetterOfInterventionNarrowCategoriesLinks = "H";
+            const columnLetterOfTotalRowDisplayName = "I";
+            const columnLetterOfTotalRowBackgroundColor = "J";
+
+            let tempOutcomeBroadCategoryTitle = "";
+            let tempOutcomeNarrowCategoriesArray = [];
+            let tempInterventionBroadCategoryTitle = "";
+            let tempInterventionNarrowCategoriesArray = [];
+
+            let tempOutcomeCategoryItem = {
+                title: "",
+                broadCategoryTitle: "",
+                color: "",
+                link: "",
+            };
+
+            let tempInterventionCategoryItem = {
+                title: "",
+                broadCategoryTitle: "",
+                color: "",
+                link: "",
+            };
+
+            let tempTotalRowDisplayName = "";
+            let tempTotalRowBackgroundColor = "";
+
+            cellsArray.forEach((element, index, array) => {
+                if (index >= numberOfColumns) {
+                if (element.title["$t"].includes(columnLetterOfTotalRowDisplayName)) {
+                    tempTotalRowDisplayName = element.content["$t"].trim();
+                }
+
+                if (
+                    tempTotalRowDisplayName == array[index - 1].content["$t"].trim() &&
+                    element.title["$t"].includes(columnLetterOfTotalRowBackgroundColor)
+                ) {
+                    tempTotalRowBackgroundColor = element.content["$t"].trim();
+                }
+
+                // Outcomes
+                if (element.title["$t"].includes(columnLetterOfOutcomeNarrowCategories)) {
+                    tempOutcomeCategoryItem.title = element.content["$t"].trim();
+                }
+
+                if (
+                    tempOutcomeCategoryItem.title ==
+                    array[index - 1].content["$t"].trim() &&
+                    element.title["$t"].includes(columnLetterOfOutcomeBroadCategories)
+                ) {
+                    tempOutcomeCategoryItem.broadCategoryTitle = element.content[
+                    "$t"
+                    ].trim();
+                }
+
+                if (
+                    tempOutcomeCategoryItem.title ==
+                    array[index - 2].content["$t"].trim() &&
+                    element.title["$t"].includes(columnLetterOfOutcomeNarrowCategoriesColor)
+                ) {
+                    tempOutcomeCategoryItem.color = element.content["$t"].trim();
+                }
+
+                if (
+                    tempOutcomeCategoryItem.title ==
+                    array[index - 3].content["$t"].trim() &&
+                    element.title["$t"].includes(columnLetterOfOutcomeNarrowCategoriesLinks)
+                ) {
+                    tempOutcomeCategoryItem.link = element.content["$t"].trim();
+                }
+
+                //Interventions
+                if (
+                    element.title["$t"].includes(columnLetterOfInterventionNarrowCategories)
+                ) {
+                    tempInterventionCategoryItem.title = element.content["$t"].trim();
+                }
+
+                if (
+                    tempInterventionCategoryItem.title ==
+                    array[index - 1].content["$t"].trim() &&
+                    element.title["$t"].includes(columnLetterOfInterventionBroadCategories)
+                ) {
+                    tempInterventionCategoryItem.broadCategoryTitle = element.content[
+                    "$t"
+                    ].trim();
+                }
+
+                if (
+                    tempInterventionCategoryItem.title ==
+                    array[index - 2].content["$t"].trim() &&
+                    element.title["$t"].includes(
+                    columnLetterOfInterventionNarrowCategoriesColor
+                    )
+                ) {
+                    tempInterventionCategoryItem.color = element.content["$t"].trim();
+                }
+
+                if (
+                    tempInterventionCategoryItem.title ==
+                    array[index - 3].content["$t"].trim() &&
+                    element.title["$t"].includes(
+                    columnLetterOfInterventionNarrowCategoriesLinks
+                    )
+                ) {
+                    tempInterventionCategoryItem.link = element.content["$t"].trim();
+                }
+
+                // if sheet row ends
+                if (
+                    typeof array[index + 1] === "undefined" ||
+                    array[index].title["$t"] > array[index + 1].title["$t"]
+                ) {
+                    if (
+                    tempOutcomeCategoryItem.title &&
+                    tempOutcomeCategoryItem.broadCategoryTitle
+                    ) {
+                    tempOutcomeNarrowCategoriesArray.push(tempOutcomeCategoryItem);
+                    }
+
+                    if (
+                    tempInterventionCategoryItem.title &&
+                    tempInterventionCategoryItem.broadCategoryTitle
+                    ) {
+                    tempInterventionNarrowCategoriesArray.push(
+                        tempInterventionCategoryItem
+                    );
+                    }
+
+                    tempOutcomeCategoryItem = {
+                    title: "",
+                    broadCategoryTitle: "",
+                    color: "",
+                    link: "",
+                    };
+                    tempInterventionCategoryItem = {
+                    title: "",
+                    broadCategoryTitle: "",
+                    color: "",
+                    link: "",
+                    };
+                }
+                }
+            });
+
+            let tempOutcomeBroadCategoriesTitlesArray = [];
+            let tempInterventionBroadCategoriesTitlesArray = [];
+            let tempOutcomeNarrowCategoriesTitlesArray = [];
+            let tempInterventionNarrowCategoriesTitlesArray = [];
+
+            tempOutcomeNarrowCategoriesArray.forEach((element) => {
+                if (
+                tempOutcomeBroadCategoriesTitlesArray.indexOf(
+                    element.broadCategoryTitle
+                ) === -1
+                ) {
+                tempOutcomeBroadCategoriesTitlesArray.push(element.broadCategoryTitle);
+                }
+            });
+
+            tempInterventionNarrowCategoriesArray.forEach((element) => {
+                if (
+                tempInterventionBroadCategoriesTitlesArray.indexOf(
+                    element.broadCategoryTitle
+                ) === -1
+                ) {
+                tempInterventionBroadCategoriesTitlesArray.push(
+                    element.broadCategoryTitle
+                );
+                }
+            });
+
+            tempOutcomeNarrowCategoriesArray.forEach((element) => {
+                tempOutcomeNarrowCategoriesTitlesArray.push(element.title);
+            });
+            tempInterventionNarrowCategoriesArray.forEach((element) => {
+                tempInterventionNarrowCategoriesTitlesArray.push(element.title);
+            });
+
+            resultObj.outcomesCategories = tempOutcomeNarrowCategoriesArray;
+            resultObj.interventionsCategories = tempInterventionNarrowCategoriesArray;
+            resultObj.outcomesBroadCategoriesTitles = tempOutcomeBroadCategoriesTitlesArray;
+            resultObj.interventionsBroadCategoriesTitles = tempInterventionBroadCategoriesTitlesArray;
+            resultObj.outcomesNarrowCategoriesTitles = tempOutcomeNarrowCategoriesTitlesArray;
+            resultObj.interventionsNarrowCategoriesTitles = tempInterventionNarrowCategoriesTitlesArray;
+            resultObj.totalRowName = tempTotalRowDisplayName;
+            resultObj.totalRowBackgroundColor = tempTotalRowBackgroundColor;
+
+            return resultObj;
+            }
+
+            function initializeStudiesValuesArrayForEvidenceMap(filtersBlockArray) {
+            let tempFiltersBlockArray = [];
+            filtersBlockArray.forEach((item, index) => {
+                let tempObj = {
+                title: item.title.trim(),
+                letter: item.letter,
+                values: [],
+                };
+                tempFiltersBlockArray.push(tempObj);
+            });
+            return tempFiltersBlockArray;
+            }
+
+            function getNumberOfColumnsForEvidenceMap(array) {
+            let i = 0;
+            let numberOfColumns = 0;
+            for (let cell of array) {
+                if (array[i + 1] && array[i].title["$t"] > array[i + 1].title["$t"]) {
+                numberOfColumns++;
+                break;
+                } else {
+                numberOfColumns++;
+                i++;
+                }
+            }
+
+            return numberOfColumns;
+            }
+
+            function downloadCSVForEvidenceMap(studyListItemWrapperId, filename) {
+            let csvRows = [];
+            let rows = document.querySelectorAll(
+                "#" + studyListItemWrapperId + " .study-list-item a"
+            );
+
+            rows.forEach((row) => {
+                let tempArr = [];
+                tempArr.push(row.innerText.replace(/"/g, "`"));
+                tempArr.push(row.href);
+                csvRows.push(tempArr);
+            });
+
+            exportToCsvForEvidenceMap(filename, csvRows);
+            }
+
+            function exportToCsvForEvidenceMap(filename, rows) {
+            var processRow = function (row) {
+                var finalVal = "";
+                for (var j = 0; j < row.length; j++) {
+                var innerValue = row[j] === null ? "" : row[j].toString();
+                if (row[j] instanceof Date) {
+                    innerValue = row[j].toLocaleString();
+                }
+                var result = innerValue.replace(/"/g, '""');
+                if (result.search(/("|,|\n)/g) >= 0) result = '"' + result + '"';
+                if (j > 0) finalVal += ",";
+                finalVal += result;
+                }
+                return finalVal + "\n";
+            };
+
+            var csvFile = "";
+            for (var i = 0; i < rows.length; i++) {
+                csvFile += processRow(rows[i]);
+            }
+
+            var blob = new Blob([csvFile], { type: "text/csv;charset=utf-8;" });
+            if (navigator.msSaveBlob) {
+                // IE 10+
+                navigator.msSaveBlob(blob, filename);
+            } else {
+                var link = document.createElement("a");
+                if (link.download !== undefined) {
+                // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", filename);
+                link.style.visibility = "hidden";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                }
+            }
+            }
+
+          </script>
+      </div>
+  </body>
+</html>
