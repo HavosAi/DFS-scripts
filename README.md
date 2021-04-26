@@ -6,20 +6,31 @@ These scripts provide the ability to visualize the data presented in the Google 
 Here is the link to example of such sheet: https://docs.google.com/spreadsheets/d/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/
 
 ## Requirements
-    To make multiselections in filter blocks of these visualizations work properly you need to add jQuery before all other scripts. 
+    To make these visualizations work properly you need to add jQuery before all other scripts. 
+    How to add it web page: 
+    ```
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    ```
     
 ## How to use it
 
 ### Evidence Gap Map
 
 1) Add [res/multiselect.js](https://github.com/DFSDeveloper/DFS-scripts/blob/main/res/multiselect.js) to web page. 
-2) Add resources for HighCharts API to web page: 
+    ```
+    <script defer>{Post code from the file here}</script>
+    ```
+2) Add [res/multiselect.css](https://github.com/DFSDeveloper/DFS-scripts/blob/main/res/multiselect.css) to web page. 
+    ```
+    <style>{Post code from the file here}</style>
+    ```
+3) Add resources for HighCharts API to web page: 
 ```
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/highcharts-more.js"></script>
-    <script src="https://code.highcharts.com/modules/annotations.js"></script>
+    <script defer src="https://code.highcharts.com/highcharts.js"></script>
+    <script defer src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script defer src="https://code.highcharts.com/modules/annotations.js"></script>
 ```
-3) Add such HTML tag to web page where you want to display the visualization:
+4) Add such HTML tag to web page where you want to display the visualization:
 ```
     <div
       id=idOfElement
@@ -57,20 +68,38 @@ Example:
     ></div>
 ```
 
-4) Add [evidence-gap-map.js](https://github.com/DFSDeveloper/DFS-scripts/blob/main/evidence-gap-map.js) script to web page. 
+5) Add [evidence-gap-map.js](https://github.com/DFSDeveloper/DFS-scripts/blob/main/evidence-gap-map.js) script to web page. 
+```
+<script defer>{Post code from the file here}</script>
+```
 
 
 
 ### World Map 
 
 1) Add [res/multiselect.js](https://github.com/DFSDeveloper/DFS-scripts/blob/main/res/multiselect.js) to web page 
-2) Add resources for HighCharts API to web page: 
+    ```
+    <script defer>{Post code from the file here}</script>
+    ```
+    
+2) Add [res/multiselect.css](https://github.com/DFSDeveloper/DFS-scripts/blob/main/res/multiselect.css) to web page. 
 ```
-    <script src="https://code.highcharts.com/maps/highmaps.js"></script>
-    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/mapdata/custom/world-eckert3.js"></script>
+<style>{Post code from the file here}</style>
 ```
-3) Add such HTML tag to web page where you want to display the visualization:
+
+3)  Add [res/pagination.css](https://github.com/DFSDeveloper/DFS-scripts/blob/main/res/pagination.css) to web page. 
+```
+<style>{Post code from the file here}</style>
+```
+
+4) Add resources for HighCharts API and pagination component to web page: 
+```
+    <script defer src="https://code.highcharts.com/maps/highmaps.js"></script>
+    <script defer src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+    <script defer src="https://code.highcharts.com/mapdata/custom/world-eckert3.js"></script>
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+```
+5) Add such HTML tag to web page where you want to display the visualization:
 ```
     <div
       id=idOfElement
@@ -98,7 +127,10 @@ Example:
     data-settings-table = "2"></div>
 ```
 
-4) Add [world-map-script.js](https://github.com/DFSDeveloper/DFS-scripts/blob/main/world-map-script.js) script to web page. 
+5) Add [world-map-script.js](https://github.com/DFSDeveloper/DFS-scripts/blob/main/world-map-script.js) script to web page. 
+```
+<script defer>{Post code from the file here}</script>
+```
 
 
 If you want to add both visualizations on the same web page, add the world map HighCharts resources first, and then the evidence gap map HighCharts resources.
