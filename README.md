@@ -5,6 +5,14 @@
 These scripts provide the ability to visualize the data presented in the Google Sheet.
 Here is the link to example of such sheet: https://docs.google.com/spreadsheets/d/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/
 
+To see an example of these charts please visit: 
+ - https://agricultureinthedigitalage.org/evidence-gap-map/
+ - https://agricultureinthedigitalage.org/explore-data/
+
+You can also see them by downloading this [file](https://github.com/DFSDeveloper/DFS-scripts/blob/main/index.html).
+Please look into it if you encounter something unclear in the instructions below.
+
+
 ## Requirements
 
 To make these visualizations work properly you need to add jQuery before all other scripts. 
@@ -140,6 +148,7 @@ If you want to add both visualizations on the same web page, add the world map H
     <script src="https://code.highcharts.com/maps/highmaps.js"></script>
     <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/mapdata/custom/world-eckert3.js"></script>
+    
     <script src="https://code.highcharts.com/maps/highmaps.js"></script>
     <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/mapdata/custom/world-eckert3.js"></script>
