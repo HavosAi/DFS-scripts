@@ -8,7 +8,7 @@ Here is the link to example of such sheet: https://docs.google.com/spreadsheets/
 ## Requirements
 
 To make these visualizations work properly you need to add jQuery before all other scripts. 
-How to add it web page: 
+How to add it to web page: 
 
 ```
 <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
