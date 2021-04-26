@@ -6,24 +6,26 @@ These scripts provide the ability to visualize the data presented in the Google 
 Here is the link to example of such sheet: https://docs.google.com/spreadsheets/d/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/
 
 ## Requirements
-    To make these visualizations work properly you need to add jQuery before all other scripts. 
-    How to add it web page: 
-    ```
-    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    ```
+
+To make these visualizations work properly you need to add jQuery before all other scripts. 
+How to add it web page: 
+
+```
+<script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+```
     
 ## How to use it
 
 ### Evidence Gap Map
 
 1) Add [res/multiselect.js](https://github.com/DFSDeveloper/DFS-scripts/blob/main/res/multiselect.js) to web page. 
-    ```
-    <script defer>{Post code from the file here}</script>
-    ```
+```
+<script defer>{Post code from the file here}</script>
+```
 2) Add [res/multiselect.css](https://github.com/DFSDeveloper/DFS-scripts/blob/main/res/multiselect.css) to web page. 
-    ```
-    <style>{Post code from the file here}</style>
-    ```
+```
+<style>{Post code from the file here}</style>
+```
 3) Add resources for HighCharts API to web page: 
 ```
     <script defer src="https://code.highcharts.com/highcharts.js"></script>
@@ -78,10 +80,10 @@ Example:
 ### World Map 
 
 1) Add [res/multiselect.js](https://github.com/DFSDeveloper/DFS-scripts/blob/main/res/multiselect.js) to web page 
-    ```
-    <script defer>{Post code from the file here}</script>
-    ```
-    
+```
+<script defer>{Post code from the file here}</script>
+```
+
 2) Add [res/multiselect.css](https://github.com/DFSDeveloper/DFS-scripts/blob/main/res/multiselect.css) to web page. 
 ```
 <style>{Post code from the file here}</style>
