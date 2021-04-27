@@ -109,7 +109,8 @@ evidenceGapMapElementsArray.forEach((evidenceGapMapElement) => {
     chartElement.style.transformOrigin = "top left";
     chartContainerElement.style.height =
       chartHeight * (chartScale + 0.01) + "px";
-    chartContainerElement.style.width = chartWidth * chartScale + "px";
+    // chartContainerElement.style.width = chartWidth * chartScale + "px";
+    chartContainerElement.style.width = "100%";
 
     //Prepare data structure for highchart
     let initialDataForChart = settings.bubbles;
@@ -244,12 +245,13 @@ function createInitialComponentForEvidenceMap(
   chartContainerElement.id = chartContainerId;
   chartContainerElement.setAttribute(
     "style",
-    "overflow-x: scroll; overflow-y: hidden"
+    "overflow: hidden; overflow-x: scroll; width: 100%;"
   );
   mainComponentElement.append(chartContainerElement);
 
   let chartElement = document.createElement("div");
   chartElement.id = chartId;
+  chartElement.setAttribute("style", "margin: auto;");
   chartContainerElement.append(chartElement);
 
   let studyListContainerElement = document.createElement("div");
