@@ -71,8 +71,12 @@ evidenceGapMapElementsArray.forEach((evidenceGapMapElement) => {
     let chartElement = document.getElementById(chartId);
     let chartContainerElement = document.getElementById(chartContainerId);
 
-    let labelsArrayX = chartSettings.outcomesNarrowCategoriesTitles;
-    let labelsArrayY = chartSettings.interventionsNarrowCategoriesTitles;
+    let labelsArrayX = chartSettings.outcomesCategories.map(
+      (category) => category.title
+    );
+    let labelsArrayY = chartSettings.interventionsCategories.map(
+      (category) => category.title
+    );
     let plotLinesX = [];
     let plotLinesY = [];
 
@@ -138,6 +142,8 @@ evidenceGapMapElementsArray.forEach((evidenceGapMapElement) => {
     prepareGridAndCategoriesForEvidenceMap(
       mainComponentId,
       chartSettings,
+      labelsArrayX,
+      labelsArrayY,
       plotLinesX,
       plotLinesY,
       chartHeight,
@@ -148,6 +154,7 @@ evidenceGapMapElementsArray.forEach((evidenceGapMapElement) => {
       labelRowWidth,
       rowCategoryLabelWidth,
       labelColumnsHeight,
+      totalRowName,
       toFixDimensions
     );
 
@@ -490,7 +497,8 @@ function addUpdateBtnHandlerForEvidenceMap(
         cellHeight,
         labelColumnsHeight,
         initialDataForChart,
-        totalRowName
+        totalRowName,
+        totalRowBackgroundColor
       );
 
       let chart = getAndCreateChartForEvidenceMap(
@@ -531,7 +539,8 @@ function getDataForChartForEvidenceMap(
   cellHeight,
   labelColumnsHeight,
   initialDataForChart,
-  totalRowName
+  totalRowName,
+  totalRowBackgroundColor
 ) {
   let dataForChartForFiltration = JSON.parse(
     JSON.stringify(initialDataForChart)
@@ -1166,6 +1175,8 @@ function getYCoord(
 function prepareGridAndCategoriesForEvidenceMap(
   mainComponentId,
   chartSettings,
+  labelsArrayX,
+  labelsArrayY,
   plotLinesX,
   plotLinesY,
   chartHeight,
@@ -1176,6 +1187,7 @@ function prepareGridAndCategoriesForEvidenceMap(
   labelRowWidth,
   rowCategoryLabelWidth,
   labelColumnsHeight,
+  totalRowName,
   toFixDimensions
 ) {
   const fontSize = 16;
@@ -1216,32 +1228,60 @@ function prepareGridAndCategoriesForEvidenceMap(
     });
   });
 
-  chartSettings.interventionsCategories.forEach(
-    (category, categoryIndex, array) => {
+  labelsArrayY.forEach((label) => {
+    chartSettings.interventionsCategories.forEach(
+      (category, categoryIndex, array) => {
+        if (label == category.title) {
+          const itemX = rowCategoryLabelWidth + fontSize * 2;
+          const itemY =
+            chartHeight -
+            labelColumnsHeight -
+            cellHeight * (categoryIndex + 1) +
+            cellHeight / 2 -
+            fontSize / 2;
+
+          let labelText = "";
+          if (category.link) {
+            labelText =
+              '<a class="' +
+              mainComponentId +
+              '-category-to-anchor-link" ' +
+              'style="text-decoration: none !important;" ' +
+              ' target="_blank" ' +
+              ' href="' +
+              category.link +
+              '">' +
+              category.title +
+              "</a>";
+          } else {
+            labelText = category.title;
+          }
+
+          plotLinesY.push({
+            value: itemY,
+            color: "#cccccc",
+            width: 0,
+            zIndex: 10,
+            label: {
+              text: labelText,
+              rotation: 360,
+              x: itemX,
+              y: 0,
+              style: { fontSize: fontSize + "px" },
+            },
+          });
+        }
+      }
+    );
+
+    if (label == totalRowName) {
       const itemX = rowCategoryLabelWidth + fontSize * 2;
       const itemY =
         chartHeight -
         labelColumnsHeight -
-        cellHeight * (categoryIndex + 1) +
+        cellHeight * labelsArrayY.length +
         cellHeight / 2 -
         fontSize / 2;
-
-      let labelText = "";
-      if (category.link) {
-        labelText =
-          '<a class="' +
-          mainComponentId +
-          '-category-to-anchor-link" ' +
-          'style="text-decoration: none !important;" ' +
-          ' target="_blank" ' +
-          ' href="' +
-          category.link +
-          '">' +
-          category.title +
-          "</a>";
-      } else {
-        labelText = category.title;
-      }
 
       plotLinesY.push({
         value: itemY,
@@ -1249,7 +1289,7 @@ function prepareGridAndCategoriesForEvidenceMap(
         width: 0,
         zIndex: 10,
         label: {
-          text: labelText,
+          text: totalRowName,
           rotation: 360,
           x: itemX,
           y: 0,
@@ -1257,7 +1297,7 @@ function prepareGridAndCategoriesForEvidenceMap(
         },
       });
     }
-  );
+  });
 
   let numberOfAlreadyCountedCategories = 0;
   chartSettings.interventionsBroadCategoriesTitles.forEach(
