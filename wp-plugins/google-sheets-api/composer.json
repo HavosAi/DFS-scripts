@@ -1,0 +1,14 @@
+{
+    "name": "cornel/google_sheets_api",
+    "description": "",
+    "type": "plugin",
+    "autoload": {
+        "psr-4": {
+            "Cornel\\GoogleSheetsAPI\\": "src/"
+        }
+    },
+    "require": {
+        "google/apiclient": "^2.0",
+        "pimple/pimple": "^3.4"
+    }
+}
