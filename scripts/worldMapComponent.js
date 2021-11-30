@@ -5,6 +5,8 @@
 //     data-table = "1"
 //     data-settings-table = "2"></div>
 
+//TEST
+
 const worldMapVisualizationClass = "world-map-visualization";
 
 //Collect all elements, where evidence gap map is needed
@@ -45,9 +47,7 @@ worldMapElementsArray.forEach((worldMapElement) => {
     let studiesArray = getStudiesArray(data.sheet, config);
     console.log(studiesArray);
 
-
     // ======================
-
 
     //Prepare initial structure for filters data
     let filtersValuesFromSheetArray = getValuesForFiltersArray(
@@ -153,14 +153,16 @@ function getConfig(settings) {
           row[sheetColumnNumberOfColumnTitlesOfFilterValues]?.trim(),
         defaultValues: [],
       };
-      row[sheetColumnNumberOfFilterDefaultValues]?.split(valueSeparator)
+      row[sheetColumnNumberOfFilterDefaultValues]
+        ?.split(valueSeparator)
         .forEach((cellValue) => {
           tempFiltersBlockItem.defaultValues.push(cellValue?.trim());
         });
 
       let tempTableColumnItem = {
         title: row[sheetColumnNumberOfTableColumnTitles]?.trim(),
-        sheetColumnTitle: row[sheetColumnNumberOfTableColumnTitleLetter]?.trim(),
+        sheetColumnTitle:
+          row[sheetColumnNumberOfTableColumnTitleLetter]?.trim(),
       };
 
       if (tempFiltersBlockItem.title && tempFiltersBlockItem.sheetColumnTitle) {
@@ -214,7 +216,9 @@ function getStudiesArray(sheet, config) {
           study.studyTitle = cell;
         }
 
-        if (sheet[0][cellIndex]?.trim() === config.sheetColumnTitleOfStudyLink) {
+        if (
+          sheet[0][cellIndex]?.trim() === config.sheetColumnTitleOfStudyLink
+        ) {
           study.studyLink = cell;
         }
 
