@@ -35,8 +35,6 @@ if (
       +evidenceGapMapElement.attributes["chart-settings-table"].value || 4;
     const chartScale =
       +evidenceGapMapElement.attributes["chart-scale"].value || 0.8;
-    const toFixDimensions =
-      +evidenceGapMapElement.attributes["to-fix-dimensions"].value || 0; //due to different dimensions of grid and background polygons in visualization
 
     getGoogleSheet(
       websiteURL,
@@ -44,7 +42,6 @@ if (
       numberOfDataSettingsTableInGoogleSheet,
       numberOfChartSettingsTableInGoogleSheet
     ).then((data) => {
-      console.log(data);
       createInitialComponentForEvidenceMap(
         mainComponentId,
         chartContainerId,
@@ -54,14 +51,11 @@ if (
       );
 
       //Initialize all variables for the visualization
-      // const typeOfBubbles = data.settings.typeOfBubbles || typeOfBubble1;
       let dataSettings = getDataSettingsEvidence(
         data.dataSettings,
         evidenceGapMapValueSeparator
       );
-      console.log("dataSettings", dataSettings);
       let chartSettings = getChartSettingsEvidence(data.chartSettings);
-      console.log("chartSettings", chartSettings);
 
       let chartElement = document.getElementById(chartId);
       let chartContainerElement = document.getElementById(chartContainerId);
@@ -73,18 +67,15 @@ if (
         (category) => category.title
       );
 
-      console.log("labelsArrayX", labelsArrayX, "labelsArrayY", labelsArrayY);
       let plotLinesX = [];
       let plotLinesY = [];
 
       let totalRowName = "";
       let totalRowBackgroundColor = "";
-      if (dataSettings.typeOfBubbles == typeOfBubble1) {
-        totalRowName = chartSettings.totalRowName || "Total";
-        totalRowBackgroundColor =
-          chartSettings.totalRowBackgroundColor || "gray";
-        labelsArrayY.push(totalRowName);
-      }
+      totalRowName = chartSettings.totalRowName || "Total";
+      totalRowBackgroundColor = chartSettings.totalRowBackgroundColor || "gray";
+      labelsArrayY.push(totalRowName);
+
       let filtersBlockArray = dataSettings.filtersBlockArray;
 
       // Variables for chart
@@ -96,11 +87,8 @@ if (
       const labelRowWidth = 300 + rowCategoryLabelWidth;
       const chartWidth = 2200;
       const chartHeight = 2500;
-      const cellWidth = Math.round((chartWidth - labelRowWidth) / columnCount);
-      const cellHeight = Math.round(
-        (chartHeight - labelColumnsHeight) / rowCount
-      );
-
+      const cellWidth = (chartWidth - labelRowWidth) / columnCount;
+      const cellHeight = (chartHeight - labelColumnsHeight) / rowCount;
       chartElement.style.height = chartHeight + "px";
       chartElement.style.width = chartWidth + "px";
       chartElement.style.transform = "scale(" + chartScale + ")";
@@ -119,12 +107,10 @@ if (
         dataSettings,
         evidenceGapMapValueSeparator
       );
-      console.log("arrayOfStudies", arrayOfStudies);
 
       //Prepare initial structure for filters data
       filtersValuesToFilter =
         initializeStudiesValuesArrayForEvidenceMap(filtersBlockArray);
-      console.log("filtersValuesToFilter", filtersValuesToFilter);
 
       //Transform data in suitable for highcharts format
       let dataForChart = getDataForChartForEvidenceMap(
@@ -139,7 +125,6 @@ if (
         labelColumnsHeight,
         totalRowName
       );
-      console.log("dataForChart", dataForChart);
 
       prepareGridAndCategoriesForEvidenceMap(
         plotLinesX,
@@ -154,11 +139,8 @@ if (
         labelRowWidth,
         rowCategoryLabelWidth,
         labelColumnsHeight,
-        totalRowName,
-        toFixDimensions
+        totalRowName
       );
-
-      console.log("plotLinesX", plotLinesX, "plotLinesY", plotLinesY);
 
       //Add background polygons
       let additionalItemsForChart = addBackgroundsForHighchartForEvidenceMap(
@@ -170,11 +152,8 @@ if (
         labelRowWidth,
         labelColumnsHeight,
         totalRowName,
-        totalRowBackgroundColor,
-        toFixDimensions
+        totalRowBackgroundColor
       );
-
-      console.log("additionalItemsForChart", additionalItemsForChart);
 
       //Create chart
       let chart = getAndCreateChartForEvidenceMap(
@@ -194,8 +173,6 @@ if (
         arrayOfStudies,
         filtersBlockArray
       );
-
-      console.log("filtersValuesFromSheetArray", filtersValuesFromSheetArray);
 
       //Add filters to page
       createFiltersBlockComponentForEvidenceMap(
@@ -225,14 +202,11 @@ if (
         plotLinesY,
         cellWidth,
         labelRowWidth,
-        rowCategoryLabelWidth,
         chartHeight,
         chartWidth,
         cellHeight,
         labelColumnsHeight,
-        initialDataForChart,
         totalRowName,
-        totalRowBackgroundColor
       );
     });
 
@@ -614,54 +588,61 @@ if (
         labelsArrayX.forEach((labelColumn) => {
           labelsArrayY.forEach((labelRow) => {
             let tempArray = [];
+            let isColumnFilterMatched = false;
 
             switch (dataSettings.typeOfBubbles) {
-              // case typeOfBubble2:
-              //   //for each cell check whether the row and column values match
-              //   studiesArray.forEach((studyItem) => {
-              //     studyItem.bubbleTypesArray.forEach((bubbleType) => {
-              //       if (
-              //         bubbleType.toLowerCase() ==
-              //         resultDataItem.name.toLowerCase()
-              //       ) {
-              //         if (
-              //           studyItem.columnFilterArray.indexOf(
-              //             labelColumn.trim()
-              //           ) > -1 &&
-              //           studyItem.rowFilterArray.indexOf(labelRow.trim()) > -1
-              //         ) {
-              //           if (tempArray.indexOf(studyItem.studyTitle) === -1) {
-              //             // tempArray.push(studyItem.studyTitle.trim());
-              //             tempArray.push(
-              //               getTitleAsHTML(
-              //                 studyItem.studyTitle.trim(),
-              //                 studyLink
-              //               )
-              //             );
-              //           }
-              //         }
-              //       }
-              //     });
-              //   });
-
-              //   break;
-
-              case typeOfBubble1:
-              default:
-                let isColumnFilterMatched = false;
+              case typeOfBubble2:
                 //for each cell check whether the row and column values match
                 studiesArray.forEach((studyItem) => {
                   studyItem.bubbleTypesArray.forEach((bubbleType) => {
-                    const bubble = bubbleType.match(/\[(.*?)\]/);
-                    //get value from square brackets
-                    if (bubble) {
+                    if (
+                      bubbleType.trim().toLowerCase() ==
+                      resultDataItem.name.toLowerCase()
+                    ) {
+                      isColumnFilterMatched = false;
+                      for (columnFilter of studyItem.columnFilterArray) {
+                        if (
+                          columnFilter.split("[")[0].trim() ===
+                          labelColumn.trim()
+                        ) {
+                          isColumnFilterMatched = true;
+                          break;
+                        }
+                      }
+
                       if (
-                        bubble[1] &&
-                        bubble[1].toLowerCase() ===
+                        (labelRow === totalRowName && isColumnFilterMatched) ||
+                        (isColumnFilterMatched &&
+                          studyItem.rowFilterArray.indexOf(labelRow.trim()) >
+                            -1)
+                      ) {
+                        const title = getTitleAsHTML(
+                          studyItem.studyTitle.trim(),
+                          studyItem.studyLink
+                        );
+                        if (tempArray.indexOf(title) === -1) {
+                          tempArray.push(title);
+                        }
+                      }
+                    }
+                  });
+                });
+
+                break;
+
+              case typeOfBubble1:
+              default:
+                //for each cell check whether the row and column values match
+                studiesArray.forEach((studyItem) => {
+                  studyItem.bubbleTypesArray.forEach((bubbleType) => {
+                    const bubbleValue = bubbleType.match(/\[(.*?)\]/);
+                    //get value from square brackets
+                    if (bubbleValue) {
+                      if (
+                        bubbleValue[1] &&
+                        bubbleValue[1].toLowerCase() ===
                           resultDataItem.name.toLowerCase()
                       ) {
-                        // console.log('bubble[1]', bubble[1]?.toLowerCase(), 'resultDataItem.name', resultDataItem.name)
-                        // console.log('bubble',bubble, bubble[1], resultDataItem);
                         isColumnFilterMatched = false;
                         for (columnFilter of studyItem.columnFilterArray) {
                           if (
@@ -786,8 +767,7 @@ if (
       labelRowWidth,
       rowCategoryLabelWidth,
       labelColumnsHeight,
-      totalRowName,
-      toFixDimensions
+      totalRowName
     ) {
       // Categories
       const interventionsBroadCategoriesTitles = [
@@ -1006,7 +986,7 @@ if (
       //Add horizontal lines
       for (i = 1; i < labelsArrayY.length; i++) {
         plotLinesY.push({
-          value: cellHeight * i - toFixDimensions,
+          value: cellHeight * i,
           color: "#cccccc",
           width: 1,
           id: "plot-line-y-" + i,
@@ -1042,8 +1022,7 @@ if (
       labelRowWidth,
       labelColumnsHeight,
       totalRowName,
-      totalRowBackgroundColor,
-      toFixDimensions
+      totalRowBackgroundColor
     ) {
       let resultArray = [];
 
@@ -1051,9 +1030,12 @@ if (
       chartSettings.outcomesCategories.forEach((category, index, array) => {
         if (category.color) {
           coord1 = [labelRowWidth + cellWidth * index, chartHeight];
-          coord2 = [labelRowWidth + cellWidth * index + cellWidth, chartHeight];
+          coord2 = [
+            labelRowWidth + cellWidth * index + cellWidth + 1,
+            chartHeight,
+          ];
           coord3 = [
-            labelRowWidth + cellWidth * index + cellWidth,
+            labelRowWidth + cellWidth * index + cellWidth + 1,
             chartHeight - labelColumnsHeight,
           ];
           coord4 = [
@@ -1089,11 +1071,11 @@ if (
             ];
             coord3 = [
               labelRowWidth,
-              chartHeight - labelColumnsHeight - cellHeight * (index + 1),
+              chartHeight - labelColumnsHeight - cellHeight * (index + 1) - 1,
             ];
             coord4 = [
               0,
-              chartHeight - labelColumnsHeight - cellHeight * (index + 1),
+              chartHeight - labelColumnsHeight - cellHeight * (index + 1) - 1,
             ];
 
             let polygonItem = {
@@ -1115,32 +1097,22 @@ if (
       );
 
       // add total background
+      const totalRow = chartSettings.interventionsCategories.length;
       if (totalRowName && totalRowBackgroundColor) {
-        coord1 = [
-          0,
-          chartHeight -
-            labelColumnsHeight -
-            cellHeight * chartSettings.interventionsCategories.length,
-        ];
+        coord1 = [0, chartHeight - labelColumnsHeight - cellHeight * totalRow];
         coord2 = [
           labelRowWidth,
-          chartHeight -
-            labelColumnsHeight -
-            cellHeight * chartSettings.interventionsCategories.length,
+          chartHeight - labelColumnsHeight - cellHeight * totalRow,
         ];
         coord3 = [
           labelRowWidth,
-          chartHeight -
-            labelColumnsHeight -
-            cellHeight * (chartSettings.interventionsCategories.length + 1) +
-            toFixDimensions,
+          chartHeight - labelColumnsHeight - cellHeight * (totalRow + 1), //-
+          // totalRow,
         ];
         coord4 = [
           0,
-          chartHeight -
-            labelColumnsHeight -
-            cellHeight * (chartSettings.interventionsCategories.length + 1) +
-            toFixDimensions,
+          chartHeight - labelColumnsHeight - cellHeight * (totalRow + 1), //-
+          // totalRow,
         ];
 
         let polygonItem = {
@@ -1508,14 +1480,11 @@ if (
       plotLinesY,
       cellWidth,
       labelRowWidth,
-      rowCategoryLabelWidth,
       chartHeight,
       chartWidth,
       cellHeight,
       labelColumnsHeight,
-      initialDataForChart,
       totalRowName,
-      totalRowBackgroundColor
     ) {
       document
         .getElementById(updateButtonId)
@@ -1597,6 +1566,115 @@ if (
       });
 
       return resultArray;
+    }
+
+    function getFilteredStudiesArrayForEvidenceMap(
+      studiesArray,
+      filtersValuesFromFilterBlockArray
+    ) {
+      let resultArray = studiesArray.filter((study) => {
+        let isAllFiltersMatchesFlagArray = [];
+
+        study.filtersBlockArray.forEach((studyFilter) => {
+          let isAtLeastOneFilterValueMatch = false;
+          filtersValuesFromFilterBlockArray.forEach((fblockFilter) => {
+            if (studyFilter.title == fblockFilter.title) {
+              if (
+                fblockFilter.values.length == 0 &&
+                studyFilter.values.length == 0
+              ) {
+                //if no filter value is selected and no study filter value exists
+                isAtLeastOneFilterValueMatch = true;
+              } else if (
+                fblockFilter.values.length == 0 &&
+                studyFilter.values.length > 0
+              ) {
+                //if no filter value is selected and study filter values exist
+                isAtLeastOneFilterValueMatch = true;
+              } else if (
+                fblockFilter.values.length > 0 &&
+                studyFilter.values.length == 0
+              ) {
+                //if filter value is selected but no study filter value exists
+                isAtLeastOneFilterValueMatch = false;
+              } else {
+                studyFilter.values.forEach((studyFilterValue) => {
+                  fblockFilter.values.forEach((fblockFilterValue) => {
+                    if (studyFilterValue == fblockFilterValue) {
+                      isAtLeastOneFilterValueMatch = true;
+                    }
+                  });
+                });
+              }
+            }
+          });
+
+          isAllFiltersMatchesFlagArray.push(isAtLeastOneFilterValueMatch);
+        });
+
+        if (isAllFiltersMatchesFlagArray.indexOf(false) === -1) {
+          return true;
+        }
+      });
+
+      return resultArray;
+    }
+
+    function downloadCSVForEvidenceMap(studyListItemWrapperId, filename) {
+      let csvRows = [];
+      let rows = document.querySelectorAll(
+        "#" + studyListItemWrapperId + " .study-list-item a"
+      );
+
+      rows.forEach((row) => {
+        let tempArr = [];
+        tempArr.push(row.innerText.replace(/"/g, "`"));
+        tempArr.push(row.href);
+        csvRows.push(tempArr);
+      });
+
+      exportToCsvForEvidenceMap(filename, csvRows);
+    }
+
+    function exportToCsvForEvidenceMap(filename, rows) {
+      var processRow = function (row) {
+        var finalVal = "";
+        for (var j = 0; j < row.length; j++) {
+          var innerValue = row[j] === null ? "" : row[j].toString();
+          if (row[j] instanceof Date) {
+            innerValue = row[j].toLocaleString();
+          }
+          var result = innerValue.replace(/"/g, '""');
+          if (result.search(/("|,|\n)/g) >= 0) result = '"' + result + '"';
+          if (j > 0) finalVal += ",";
+          finalVal += result;
+        }
+        return finalVal + "\n";
+      };
+
+      var csvFile = "";
+      for (var i = 0; i < rows.length; i++) {
+        csvFile += processRow(rows[i]);
+      }
+
+      var blob = new Blob([csvFile], { type: "text/csv;charset=utf-8;" });
+      if (navigator.msSaveBlob) {
+        // IE 10+
+        navigator.msSaveBlob(blob, filename);
+      } else {
+        var link = document.createElement("a");
+        if (link.download !== undefined) {
+          // feature detection
+          // Browsers that support HTML5 download attribute
+          var url = URL.createObjectURL(blob);
+          link.setAttribute("href", url);
+          link.setAttribute("download", filename);
+          link.style.visibility = "hidden";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+      }
     }
   }
 } else {
