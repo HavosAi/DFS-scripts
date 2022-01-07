@@ -1,0 +1,224 @@
+[
+  [
+    "Outcome narrow categories",
+    "Outcome broad categories",
+    "Outcome narrow categories colour",
+    "Outcome narrow category link",
+    "Intervention narrow categories",
+    "Intervention broad categories",
+    "Intervention categories colour",
+    "Intervention narrow category link",
+    "Total row display name",
+    "Total row background color"
+  ],
+  [
+    "Income",
+    "Agricultural-led<br/> economic growth",
+    "#5fb947",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-outcomes-section",
+    "Extension",
+    "Digital Advisory & Extension",
+    "#67e0fe",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-interventions-section",
+    "Total",
+    "#E8E8E8"
+  ],
+  [
+    "Market efficiency",
+    "Agricultural-led<br/> economic growth",
+    "#5fb947",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-outcomes-section",
+    "General Agronomy",
+    "Digital Advisory & Extension",
+    "#67e0fe",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-interventions-section"
+  ],
+  [
+    "Practice Change",
+    "Agricultural-led<br/> economic growth",
+    "#5fb947",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-outcomes-section",
+    "Human Nutrition",
+    "Digital Advisory & Extension",
+    "#67e0fe",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-interventions-section"
+  ],
+  [
+    "Productivity",
+    "Agricultural-led<br/> economic growth",
+    "#5fb947",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-outcomes-section",
+    "Market, price, and subsidy info",
+    "Digital Advisory & Extension",
+    "#67e0fe",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-interventions-section"
+  ],
+  [
+    "Yield",
+    "Agricultural-led<br/> economic growth",
+    "#5fb947",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-outcomes-section",
+    "Livestock information",
+    "Digital Advisory & Extension",
+    "#67e0fe",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-interventions-section"
+  ],
+  [
+    "",
+    "",
+    "",
+    "",
+    "Pest Management",
+    "Digital Advisory & Extension",
+    "#67e0fe",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-interventions-section"
+  ],
+  [
+    "Climate resilience",
+    "Resilience & Risk",
+    "#f8c218",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-outcomes-section",
+    "Seeds & Fertilizer",
+    "Digital Advisory & Extension",
+    "#67e0fe",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-interventions-section"
+  ],
+  [
+    "Community cohension",
+    "Resilience & Risk",
+    "#f8c218",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-outcomes-section",
+    "Soil & Land",
+    "Digital Advisory & Extension",
+    "#67e0fe",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-interventions-section"
+  ],
+  [
+    "Cost effectiveness",
+    "Resilience & Risk",
+    "#f8c219",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-outcomes-section",
+    "Water & Irrigation",
+    "Digital Advisory & Extension",
+    "#67e0fe",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-interventions-section"
+  ],
+  [
+    "Resilience",
+    "Resilience & Risk",
+    "#f8c220",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-outcomes-section",
+    "Weather & Climate",
+    "Digital Advisory & Extension",
+    "#67e0fe",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-interventions-section"
+  ],
+  [],
+  [
+    "Environmental sustainability",
+    "Healthy people & planet",
+    "#24bbe1",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-outcomes-section",
+    "Credit",
+    "Digital Finance Services",
+    "#ffda65",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-interventions-section"
+  ],
+  [
+    "Nutrition",
+    "Healthy people & planet",
+    "#24bbe1",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-outcomes-section",
+    "Financial Training",
+    "Digital Finance Services",
+    "#ffda65",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-interventions-section"
+  ],
+  [
+    "",
+    "",
+    "",
+    "",
+    "Insurance",
+    "Digital Finance Services",
+    "#ffda65",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-interventions-section"
+  ],
+  [
+    "Knowledge increase",
+    "Inclusivity, empowernment<br/> and agency",
+    "#f89d29",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-outcomes-section",
+    "Payments",
+    "Digital Finance Services",
+    "#ffda65",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-interventions-section"
+  ],
+  [
+    "Social inclusion",
+    "Inclusivity, empowernment<br/> and agency",
+    "#f89d29",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-outcomes-section",
+    "Saving",
+    "Digital Finance Services",
+    "#ffda65",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-interventions-section"
+  ],
+  [
+    "Social learning",
+    "Inclusivity, empowernment<br/> and agency",
+    "#f89d29",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-outcomes-section"
+  ],
+  [
+    "Gender",
+    "Inclusivity, empowernment<br/> and agency",
+    "#f89d29",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-outcomes-section",
+    "Precision Agronomy",
+    "Digitized<br/> Farm Tools",
+    "#ff9486",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-interventions-section"
+  ],
+  [
+    "",
+    "",
+    "",
+    "",
+    "Farm Management Software",
+    "Digitized<br/> Farm Tools",
+    "#ff9486",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-interventions-section"
+  ],
+  [],
+  [
+    "",
+    "",
+    "",
+    "",
+    "Agricultural Inputs",
+    "Digital Market<br/> Linkages",
+    "#86da70",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-interventions-section"
+  ],
+  [
+    "",
+    "",
+    "",
+    "",
+    "Output Market Links",
+    "Digital Market<br/> Linkages",
+    "#86da70",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-interventions-section"
+  ],
+  [
+    "",
+    "",
+    "",
+    "",
+    "Supply Chain Management",
+    "Digital Market<br/> Linkages",
+    "#86da70",
+    "https://agricultureinthedigitalage.org/?page_id=714&preview=true#report-interventions-section"
+  ]
+]

@@ -1,0 +1,76 @@
+[
+  [
+    "sheet column title for 'Study title'",
+    "sheet column title for 'Study link'",
+    "sheet column title for Outcome narrow category  ",
+    "sheet column title for Intervention narrow category ",
+    "Type of bubbles ( depend on article | depend on outcomes )",
+    "sheet column title for Type of bubbles in sheet",
+    "Names of bubbles",
+    "Colour of bubbles",
+    "Filter titles",
+    "sheet column title for Filter column",
+    "Filter default values"
+  ],
+  [
+    "Title for Display",
+    "URL",
+    "Outcomes Positive, Nil or Mentioned",
+    "Interventions Narrow Categories",
+    "depend on outcomes",
+    "Outcomes Positive, Nil or Mentioned",
+    "Nil",
+    "#708090",
+    "Country",
+    "Countries"
+  ],
+  [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Positive",
+    "#32CD32",
+    "Study Population",
+    "Population"
+  ],
+  [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Mentioned",
+    "#4169E1",
+    "Study Method",
+    "Study Methods"
+  ],
+  ["", "", "", "", "", "", "", "", "Digital Modality", "Digital modality"],
+  [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Bundled service",
+    "Bundled broad functions"
+  ],
+  [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Socio-demographic factors",
+    "Socio-demographic factors"
+  ]
+]

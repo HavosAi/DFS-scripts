@@ -1,0 +1,163 @@
+[
+  [
+    "sheet column title for 'Study title'",
+    "sheet column title for 'Country'",
+    "sheet column title for 'Study link'",
+    "Filter titles",
+    "sheet column titles for 'Filters'",
+    "Filter default values",
+    "Table columns",
+    "sheet column titles for 'Table columns'"
+  ],
+  [
+    "Title for Display",
+    "Countries",
+    "URL",
+    "Intervention ",
+    "Interventions Narrow Categories",
+    "",
+    "Title",
+    "Title for Display"
+  ],
+  [
+    "",
+    "",
+    "",
+    "Study Population",
+    "Population",
+    "",
+    "Intervention ",
+    "Interventions Narrow Categories"
+  ],
+  [
+    "",
+    "",
+    "",
+    "Outcome Categories",
+    "Outcomes Positive, Nil or Mentioned",
+    "",
+    "Study Population",
+    "Population"
+  ],
+  [
+    "",
+    "",
+    "",
+    "Countries",
+    "Countries",
+    "",
+    "Outcome Categories",
+    "Outcomes Positive, Nil or Mentioned"
+  ],
+  ["", "", "", "Modalities", "Digital modality", "", "Countries", "Countries"],
+  [
+    "",
+    "",
+    "",
+    "Implementors",
+    "Implementer",
+    "",
+    "Modalities",
+    "Digital modality"
+  ],
+  [
+    "",
+    "",
+    "",
+    "Funding source",
+    "Funder Type",
+    "",
+    "Human assisted modality",
+    "Human assisted"
+  ],
+  [
+    "",
+    "",
+    "",
+    "Bundled service",
+    "Bundled broad functions",
+    "",
+    "Implementors",
+    "Implementer"
+  ],
+  [
+    "",
+    "",
+    "",
+    "Use facilitators: Benefits",
+    "Performance Expectancy",
+    "",
+    "Funding source",
+    "Funder Type"
+  ],
+  [
+    "",
+    "",
+    "",
+    "Use faciliatators: Ease of use",
+    "Effort Expectany",
+    "",
+    "Bundled service",
+    "Bundled broad functions"
+  ],
+  [
+    "",
+    "",
+    "",
+    "Use facilitators: Social Influence Factors",
+    "Social Influence",
+    "",
+    "Crop of Livestock Focus",
+    "Crop or Livestock focus"
+  ],
+  [
+    "",
+    "",
+    "",
+    "Use facilitators: Ability to Use Service",
+    "Facilitating Conditions",
+    "",
+    "Socio-demographic factors",
+    "Socio-demographic factors"
+  ],
+  [
+    "",
+    "",
+    "",
+    "Human assisted ",
+    "Human assisted",
+    "",
+    "Use facilitators: Benefits",
+    "Performance Expectancy"
+  ],
+  [
+    "",
+    "",
+    "",
+    "Crop or Livestock Focus",
+    "Crop or Livestock focus",
+    "",
+    "Use faciliatators: Ease of use",
+    "Effort Expectany"
+  ],
+  [
+    "",
+    "",
+    "",
+    "Socio-demographic factors",
+    "Socio-demographic factors",
+    "",
+    "Use facilitators: Social Influence Factors",
+    "Social Influence"
+  ],
+  [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Use facilitators: Ability to Use Service",
+    "Facilitating Conditions"
+  ]
+]

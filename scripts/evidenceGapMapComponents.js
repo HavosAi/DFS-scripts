@@ -13,10 +13,20 @@ if (
   );
 
   evidenceGapMapElementsArray.forEach((evidenceGapMapElement) => {
-    createEvidenceGapMapVizualization(evidenceGapMapElement);
+    createEvidenceGapMapVizualization(
+      evidenceGapMapElement,
+      evidenceGapMapValueSeparator,
+      typeOfBubble1,
+      typeOfBubble2
+    );
   });
 
-  function createEvidenceGapMapVizualization(evidenceGapMapElement) {
+  function createEvidenceGapMapVizualization(
+    evidenceGapMapElement,
+    evidenceGapMapValueSeparator,
+    typeOfBubble1,
+    typeOfBubble2
+  ) {
     const websiteURL = evidenceGapMapElement.attributes["website-url"].value;
     const mainComponentId = evidenceGapMapElement.attributes.id.value;
     const chartContainerId = mainComponentId + "-chart-container";
@@ -42,6 +52,9 @@ if (
       numberOfDataSettingsTableInGoogleSheet,
       numberOfChartSettingsTableInGoogleSheet
     ).then((data) => {
+      // Clear main wrapper before adding components
+      document.getElementById(mainComponentId).innerHTML = "";
+
       createInitialComponentForEvidenceMap(
         mainComponentId,
         chartContainerId,
@@ -95,11 +108,7 @@ if (
       chartElement.style.transformOrigin = "top left";
       chartContainerElement.style.height =
         chartHeight * (chartScale + 0.01) + "px";
-      // chartContainerElement.style.width = chartWidth * chartScale + "px";
-      chartContainerElement.style.width = "100vw";
-
-      //Prepare data structure for highchart
-      let initialDataForChart = dataSettings.bubbles;
+      chartContainerElement.style.width = "100%";
 
       //Prepare an array of studies
       const arrayOfStudies = getStudiesArrayForEvidenceMap(
@@ -206,7 +215,7 @@ if (
         chartWidth,
         cellHeight,
         labelColumnsHeight,
-        totalRowName,
+        totalRowName
       );
     });
 
@@ -427,30 +436,6 @@ if (
           }
         }
       });
-
-      // tempOutcomeNarrowCategoriesArray.forEach((element) => {
-      //   if (
-      //     tempOutcomeBroadCategoriesTitlesArray.indexOf(
-      //       element.broadCategoryTitle
-      //     ) === -1
-      //   ) {
-      //     tempOutcomeBroadCategoriesTitlesArray.push(
-      //       element.broadCategoryTitle
-      //     );
-      //   }
-      // });
-
-      // tempInterventionNarrowCategoriesArray.forEach((element) => {
-      //   if (
-      //     tempInterventionBroadCategoriesTitlesArray.indexOf(
-      //       element.broadCategoryTitle
-      //     ) === -1
-      //   ) {
-      //     tempInterventionBroadCategoriesTitlesArray.push(
-      //       element.broadCategoryTitle
-      //     );
-      //   }
-      // });
 
       return config;
     }
@@ -1106,13 +1091,11 @@ if (
         ];
         coord3 = [
           labelRowWidth,
-          chartHeight - labelColumnsHeight - cellHeight * (totalRow + 1), //-
-          // totalRow,
+          chartHeight - labelColumnsHeight - cellHeight * (totalRow + 1), 
         ];
         coord4 = [
           0,
-          chartHeight - labelColumnsHeight - cellHeight * (totalRow + 1), //-
-          // totalRow,
+          chartHeight - labelColumnsHeight - cellHeight * (totalRow + 1), 
         ];
 
         let polygonItem = {
@@ -1484,7 +1467,7 @@ if (
       chartWidth,
       cellHeight,
       labelColumnsHeight,
-      totalRowName,
+      totalRowName
     ) {
       document
         .getElementById(updateButtonId)
