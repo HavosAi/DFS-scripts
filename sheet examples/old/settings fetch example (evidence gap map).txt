@@ -1,0 +1,1086 @@
+{
+    "version": "1.0",
+    "encoding": "UTF-8",
+    "feed": {
+        "xmlns": "http://www.w3.org/2005/Atom",
+        "xmlns$openSearch": "http://a9.com/-/spec/opensearchrss/1.0/",
+        "xmlns$batch": "http://schemas.google.com/gdata/batch",
+        "xmlns$gs": "http://schemas.google.com/spreadsheets/2006",
+        "id": {
+            "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic"
+        },
+        "updated": {
+            "$t": "2021-04-24T13:22:32.197Z"
+        },
+        "category": [
+            {
+                "scheme": "http://schemas.google.com/spreadsheets/2006",
+                "term": "http://schemas.google.com/spreadsheets/2006#cell"
+            }
+        ],
+        "title": {
+            "type": "text",
+            "$t": "Evidence gap map data settings"
+        },
+        "link": [
+            {
+                "rel": "alternate",
+                "type": "application/atom+xml",
+                "href": "https://docs.google.com/spreadsheets/u/0/d/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/pubhtml"
+            },
+            {
+                "rel": "http://schemas.google.com/g/2005#feed",
+                "type": "application/atom+xml",
+                "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic"
+            },
+            {
+                "rel": "http://schemas.google.com/g/2005#post",
+                "type": "application/atom+xml",
+                "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic"
+            },
+            {
+                "rel": "http://schemas.google.com/g/2005#batch",
+                "type": "application/atom+xml",
+                "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/batch"
+            },
+            {
+                "rel": "self",
+                "type": "application/atom+xml",
+                "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic?alt\u003djson"
+            }
+        ],
+        "author": [
+            {
+                "name": {
+                    "$t": "jaronalena"
+                },
+                "email": {
+                    "$t": "jaronalena@gmail.com"
+                }
+            }
+        ],
+        "openSearch$totalResults": {
+            "$t": "35"
+        },
+        "openSearch$startIndex": {
+            "$t": "1"
+        },
+        "entry": [
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C1"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "A1"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Study title column letter "
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C1"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C2"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "B1"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Study link column letter "
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C2"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C3"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "C1"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Outcome narrow category column letter "
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C3"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C4"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "D1"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Intervention narrow category column letter "
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C4"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C5"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "E1"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Type of bubbles ( depend on article | depend on outcomes )"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C5"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C6"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "F1"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Type of bubbles column letter"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C6"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C7"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "G1"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Names of bubbles"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C7"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C8"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "H1"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Colour of bubbles"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C8"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C9"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "I1"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Filter titles"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C9"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C10"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "J1"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Filter column letter"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C10"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C11"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "K1"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Filter default values"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R1C11"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R2C1"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "A2"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "F"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R2C1"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R2C2"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "B2"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "D"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R2C2"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R2C3"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "C2"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "G"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R2C3"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R2C4"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "D2"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "J"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R2C4"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R2C5"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "E2"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "depend on outcomes"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R2C5"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R2C6"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "F2"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "G"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R2C6"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R2C7"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "G2"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Positive"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R2C7"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R2C8"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "H2"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "#32CD32"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R2C8"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R2C9"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "I2"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Country"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R2C9"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R2C10"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "J2"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "S"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R2C10"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R3C7"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "G3"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Nil"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R3C7"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R3C8"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "H3"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "#708090"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R3C8"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R3C9"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "I3"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Study Population"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R3C9"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R3C10"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "J3"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "T"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R3C10"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R4C7"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "G4"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Mentioned"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R4C7"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R4C8"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "H4"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "#4169E1"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R4C8"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R4C9"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "I4"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Study Method"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R4C9"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R4C10"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "J4"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Q"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R4C10"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R5C9"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "I5"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Digital Modality"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R5C9"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R5C10"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "J5"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "L"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R5C10"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R6C9"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "I6"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Bundled service"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R6C9"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R6C10"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "J6"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "U"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R6C10"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R7C9"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "I7"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Socio-demographic factors"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R7C9"
+                    }
+                ]
+            },
+            {
+                "id": {
+                    "$t": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R7C10"
+                },
+                "updated": {
+                    "$t": "2021-04-24T13:22:32.197Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/spreadsheets/2006",
+                        "term": "http://schemas.google.com/spreadsheets/2006#cell"
+                    }
+                ],
+                "title": {
+                    "type": "text",
+                    "$t": "J7"
+                },
+                "content": {
+                    "type": "text",
+                    "$t": "Z"
+                },
+                "link": [
+                    {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "https://spreadsheets.google.com/feeds/cells/14xd4jJ8Qukl7dyp0vGJ5k8qxMUgHIuMGxGrIspm2zx8/oivb3my/public/basic/R7C10"
+                    }
+                ]
+            }
+        ]
+    }
+}

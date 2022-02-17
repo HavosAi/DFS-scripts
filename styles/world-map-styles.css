@@ -1,0 +1,148 @@
+.world-map-visualization .loading-message {
+  text-align: center;
+}
+
+
+.highlighted-filter {
+  background: #ff690036;
+}
+
+.filter-button-block-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.filter-wrapper-block {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.filter-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  min-width: 250px;
+  padding: 1em 3em 1em 1em;
+  box-sizing: border-box;
+}
+
+
+@media (min-width: 600px) {
+  .filter-wrapper  {
+    width: 33%;
+  }
+}
+
+.filter-wrapper > * {
+  flex: 1;
+}
+
+.filter-title > div:first-child {
+  padding: 0 1em;
+}
+
+.filter-select {
+  margin: 1rem 2rem 1rem 0;
+}
+
+.filter-button-block-wrapper {
+  padding: 10px 0;
+}
+
+.world-map-table-block {
+  overflow-x: auto;
+}
+
+.world-map-table {
+  border-spacing: 0;
+}
+
+.world-map-table th {
+  border: 1px solid #eee;
+  min-width: 15em;
+}
+
+.world-map-table-content th {
+  min-width: 15em;
+  font-weight: normal;
+  padding: 0.8rem;
+  text-align: left;
+}
+
+.world-map-table-content th a {
+  color: #e67e22;
+}
+
+@media (min-width: 600px) {
+  .world-map-table-header th:nth-child(1) {
+    min-width: 500px;
+  }
+}
+
+.table-button-block-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 1rem 5vw;
+}
+
+.custom-filter-btn a,
+.export-table-btn a {
+  display: block;
+  padding: 15px 30px;
+  border-radius: 30px;
+  background: #ff6900;
+  color: white;
+  cursor: pointer;
+}
+
+.pagination-block {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.world-map-visualization .pagination-block .page_link,
+.world-map-visualization .pagination-block .next_link,
+.world-map-visualization .pagination-block .prev_link {
+  text-decoration: none !important;
+}
+
+.pagination-block {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 5vw;
+  justify-content: center;
+  list-style: none;
+}
+
+.pagination-block li {
+  margin: 0.2rem;
+}
+
+.pagination-block li > a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3em;
+  min-width: 3em;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  color: black;
+  background-color: #fff;
+}
+.pagination-block li a:hover {
+    background-color: rgb(228, 228, 228);
+  }
+
+.pagination-block li.active a {
+  background: #e67e22;
+  color: white;
+}
+.pagination-block li.active a:hover {
+    background-color: #ff9e49;
+  }
+
